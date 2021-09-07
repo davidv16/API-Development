@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exterminator.Models\Exterminator.Models.csproj" />
+    <ProjectReference Include="..\Exterminator.Services\Exterminator.Services.csproj" />
+  </ItemGroup>
+
+</Project>
