@@ -1,0 +1,15 @@
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Services.deps.json
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Services.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Services.pdb
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Models.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Repositories.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Models.pdb
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/bin/Debug/netstandard2.1/Exterminator.Repositories.pdb
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.csproj.AssemblyReference.cache
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.GeneratedMSBuildEditorConfig.editorconfig
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.AssemblyInfoInputs.cache
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.AssemblyInfo.cs
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.csproj.CoreCompileInputs.cache
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.csproj.CopyComplete
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Services/obj/Debug/netstandard2.1/Exterminator.Services.pdb

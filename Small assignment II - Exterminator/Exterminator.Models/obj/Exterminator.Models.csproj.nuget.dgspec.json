@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Models/Exterminator.Models.csproj": {}
+  },
+  "projects": {
+    "/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Models/Exterminator.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Models/Exterminator.Models.csproj",
+        "projectName": "Exterminator.Models",
+        "projectPath": "/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Models/Exterminator.Models.csproj",
+        "packagesPath": "/home/david/.nuget/packages/",
+        "outputPath": "/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Models/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/david/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/137/sdk/5.0.400/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

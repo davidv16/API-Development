@@ -1,0 +1,13 @@
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/bin/Debug/netstandard2.1/Exterminator.Repositories.deps.json
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/bin/Debug/netstandard2.1/Exterminator.Repositories.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/bin/Debug/netstandard2.1/Exterminator.Repositories.pdb
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/bin/Debug/netstandard2.1/Exterminator.Models.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/bin/Debug/netstandard2.1/Exterminator.Models.pdb
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.csproj.AssemblyReference.cache
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.AssemblyInfoInputs.cache
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.AssemblyInfo.cs
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.csproj.CoreCompileInputs.cache
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.csproj.CopyComplete
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.dll
+/home/david/forritun/T-514-VEFT/Small assignment II - Exterminator/Exterminator.Repositories/obj/Debug/netstandard2.1/Exterminator.Repositories.pdb
