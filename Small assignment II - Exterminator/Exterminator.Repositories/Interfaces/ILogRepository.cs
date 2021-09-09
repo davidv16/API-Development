@@ -4,9 +4,9 @@ using Exterminator.Models.Dtos;
 
 namespace Exterminator.Repositories.Interfaces
 {
-    public interface ILogRepository
-    {
-         void LogToDatabase(ExceptionModel exception);
-         // TODO: Should contain a method which retrieves all logs (LogDto) ordered by timestamp (descending)
-    }
+  public interface ILogRepository
+  {
+    void LogToDatabase(ExceptionModel exception);
+    IEnumerable<LogDto> GetAllLogs();
+  }
 }

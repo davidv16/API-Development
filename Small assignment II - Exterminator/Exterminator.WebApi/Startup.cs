@@ -9,6 +9,7 @@ using Exterminator.Repositories.Data;
 using Exterminator.Repositories.Implementations;
 using Exterminator.Repositories.Interfaces;
 using Exterminator.WebApi.Extensions;
+using Exterminator.WebApi.ExceptionHandlerExtensions;
 
 namespace Exterminator.WebApi
 {
@@ -25,12 +26,11 @@ namespace Exterminator.WebApi
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
-      // TODO: Register dependencies
       services.AddTransient<ILogService, LogService>();
       services.AddTransient<IGhostbusterService, GhostbusterService>();
       services.AddTransient<ILogRepository, LogRepository>();
       services.AddTransient<IGhostbusterRepository, GhostbusterRepository>();
-      services.AddTransient<IGhostbusterDbContext, GhostbusterDbContext>();
+      services.AddSingleton<IGhostbusterDbContext, GhostbusterDbContext>();
 
 
     }
@@ -43,8 +43,8 @@ namespace Exterminator.WebApi
         app.UseDeveloperExceptionPage();
       }
 
-      // TODO: Setup global exception handling
 
+      app.UseGlobalExceptionHandler();
       app.UseRouting();
       app.UseEndpoints(endpoints =>
       {

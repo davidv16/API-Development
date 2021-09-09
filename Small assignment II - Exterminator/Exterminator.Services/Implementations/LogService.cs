@@ -6,19 +6,19 @@ using Exterminator.Services.Interfaces;
 
 namespace Exterminator.Services.Implementations
 {
-    public class LogService : ILogService
+  public class LogService : ILogService
+  {
+    private readonly ILogRepository _logRepository;
+
+    public LogService(ILogRepository logRepository)
     {
-        private readonly ILogRepository _logRepository;
-
-        public LogService(ILogRepository logRepository)
-        {
-            _logRepository = logRepository;
-        }
-
-        public void LogToDatabase(ExceptionModel exception)
-        {
-            _logRepository.LogToDatabase(exception);
-        }
-        // TODO: Should contain a method which retrieves all logs (LogDto) ordered by timestamp (descending)
+      _logRepository = logRepository;
     }
+
+    public void LogToDatabase(ExceptionModel exception)
+    {
+      _logRepository.LogToDatabase(exception);
+    }
+    public IEnumerable<LogDto> GetAllLogs() => _logRepository.GetAllLogs();
+  }
 }

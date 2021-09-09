@@ -4,31 +4,31 @@ using Exterminator.Models.Dtos;
 using Exterminator.Models.InputModels;
 using Exterminator.Repositories.Interfaces;
 using Exterminator.Services.Interfaces;
+using Exterminator.Models.Exceptions;
 
 namespace Exterminator.Services.Implementations
 {
-    public class GhostbusterService : IGhostbusterService
+  public class GhostbusterService : IGhostbusterService
+  {
+    private readonly IGhostbusterRepository _ghostbusterRepository;
+
+    public GhostbusterService(IGhostbusterRepository ghostbusterRepository)
     {
-        private readonly IGhostbusterRepository _ghostbusterRepository;
-
-        public GhostbusterService(IGhostbusterRepository ghostbusterRepository)
-        {
-            _ghostbusterRepository = ghostbusterRepository;
-        }
-
-        public int CreateGhostbuster(GhostbusterInputModel ghostbuster) => _ghostbusterRepository.CreateGhostbuster(ghostbuster);
-
-        public IEnumerable<GhostbusterDto> GetAllGhostbusters(string expertize = "") => _ghostbusterRepository.GetAllGhostbusters(expertize);
-
-        public GhostbusterDto GetGhostbusterById(int id)
-        {
-            if (id < 1) { throw new ArgumentOutOfRangeException("Id should not be lower than 1"); }
-            if (!_ghostbusterRepository.DoesExist(id))
-            {
-                // TODO: Implement and uncomment
-                //throw new ResourceNotFoundException($"Ghostbuster with id {id} was not found."); 
-            }
-            return _ghostbusterRepository.GetGhostbusterById(id);
-        }
+      _ghostbusterRepository = ghostbusterRepository;
     }
+
+    public int CreateGhostbuster(GhostbusterInputModel ghostbuster) => _ghostbusterRepository.CreateGhostbuster(ghostbuster);
+
+    public IEnumerable<GhostbusterDto> GetAllGhostbusters(string expertize = "") => _ghostbusterRepository.GetAllGhostbusters(expertize);
+
+    public GhostbusterDto GetGhostbusterById(int id)
+    {
+      if (id < 1) { throw new ArgumentOutOfRangeException("Id should not be lower than 1"); }
+      if (!_ghostbusterRepository.DoesExist(id))
+      {
+        throw new ResourceNotFoundException($"Ghostbuster with id {id} was not found.");
+      }
+      return _ghostbusterRepository.GetGhostbusterById(id);
+    }
+  }
 }

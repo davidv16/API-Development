@@ -3,9 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exterminator.WebApi.Controllers
 {
-    [Route("api/logs")]
-    public class LogController : Controller
+  [Route("api/logs")]
+  public class LogController : Controller
+  {
+    private readonly ILogService _logService;
+
+    public LogController(ILogService logService)
     {
-        // TODO: Implement route which gets all logs from the ILogService, which should be injected through the constructor
+      _logService = logService;
     }
+
+    [HttpGet]
+    [Route("")]
+    public IActionResult GetAllLogs() => Ok(_logService.GetAllLogs());
+  }
 }
