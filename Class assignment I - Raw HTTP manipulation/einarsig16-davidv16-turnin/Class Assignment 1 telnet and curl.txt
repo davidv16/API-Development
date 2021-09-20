@@ -1,0 +1,141 @@
+Einar Sigurðsson - einarsig16
+Davíð Valdimar Arnalds - davidv16
+
+1.
+  1.1
+    TELNET
+    GET / HTTP/1.1
+    Host: example.com
+
+    CURL
+    curl -X GET http://example.com
+
+2.
+  2.1
+    TELNET
+    GET /tasks HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks
+
+  2.2
+    TELNET
+    GET /tasks/in_progress/ HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/in_progress
+
+  2.3
+    TELNET
+    GET /tasks/in_progress/?assignedTo=Lisa HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/in_progress/?assignedTo=Lisa
+
+  2.4
+    TELNET
+    GET /tasks/in_progress/?assignedTo=Gordon Freeman HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/in_progress/?assignedTo=Gordon Freeman
+
+  2.5
+    TELNET
+    GET /tasks/in_progress/?assignedTo=Gordon%20Freeman HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/in_progress/?assignedTo=Gordon%20Freeman
+
+  2.6
+    TELNET
+    telnet veft-http.herokuapp.com 80
+    GET /tasks/in_progress/42 HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/in_progress/42
+
+  2.7
+    TELNET
+    GET /tasks/in_progress/42 HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept: application/json
+
+    GET /tasks/in_progress/42 HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept: application/xml
+
+    GET /tasks/in_progress/42 HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept: application/html
+
+    CURL
+    curl -X GET -H 'Accept: application/json' https://veft-http.herokuapp.com/tasks/in_progress/42
+    curl -X GET -H 'Accept: application/xml' https://veft-http.herokuapp.com/tasks/in_progress/42
+    curl -X GET -H 'Accept: application/html' https://veft-http.herokuapp.com/tasks/in_progress/42
+
+  2.8
+    TELNET
+    GET /tasks/instructions HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/instructions
+
+  2.9
+    TELNET
+    GET /tasks/instructions HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept-Language: is-IS
+
+    GET /tasks/instructions HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept-Language: en-UK
+
+    GET /tasks/instructions HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept-Language: de-DE
+
+    GET /tasks/instructions HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Accept-Language: ja
+
+    CURL
+    curl -X GET -H 'Accept-Language: is-IS' https://veft-http.herokuapp.com/tasks/instructions
+    curl -X GET -H 'Accept-Language: en-UK' https://veft-http.herokuapp.com/tasks/instructions
+    curl -X GET -H 'Accept-Language: de-DE' https://veft-http.herokuapp.com/tasks/instructions
+    curl -X GET -H 'Accept-Language: ja' https://veft-http.herokuapp.com/tasks/instructions
+
+  2.10
+    TELNET
+    POST /tasks/in_progress/ HTTP/1.1
+    Host: veft-http.herokuapp.com
+    Content-Type: application/json
+    Content-Length: 46
+
+    {"name":"2.10-telnet","assignedTo":"John Doe"}
+
+
+    CURL
+    curl -v -X POST -H 'Content-Type: application/json' https://veft-http.herokuapp.com/tasks/in_progress -d '{"name":"2.10-curl","assignedTo":"John Doe"}'
+
+  2.11
+    TELNET
+    GET /tasks/in_progress/490 HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X GET https://veft-http.herokuapp.com/tasks/in_progress/492
+
+  2.12
+    TELNET
+    PUT /tasks/in_progress/490/assign/Tim%20Berners-Lee HTTP/1.1
+    Host: veft-http.herokuapp.com
+
+    CURL
+    curl -X PUT -H 'Content-Type: application/json' https://veft-http.herokuapp.com/tasks/in_progress/492/assign/Tim%20Berners-Lee

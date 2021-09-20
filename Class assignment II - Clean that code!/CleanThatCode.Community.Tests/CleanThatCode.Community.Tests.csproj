@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
+    <PackageReference Include="Moq" Version="4.16.1"/>
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.5"/>
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.5"/>
+    <PackageReference Include="nbuilder" Version="6.1.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CleanThatCode.Community.Common\CleanThatCode.Community.Common.csproj"/>
+    <ProjectReference Include="..\CleanThatCode.Community.Models\CleanThatCode.Community.Models.csproj"/>
+    <ProjectReference Include="..\CleanThatCode.Community.Services\CleanThatCode.Community.Services.csproj"/>
+  </ItemGroup>
+</Project>

@@ -18,7 +18,6 @@ namespace Exterminator.WebApi.ExceptionHandlerExtensions
         err.Run(async context =>
         {
           var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
-          // statusCode set to 500 error by default
           var statusCode = (int)HttpStatusCode.InternalServerError;
           var exception = exceptionHandlerFeature.Error;
           var logService = app.ApplicationServices.GetService(typeof(ILogService)) as ILogService;
