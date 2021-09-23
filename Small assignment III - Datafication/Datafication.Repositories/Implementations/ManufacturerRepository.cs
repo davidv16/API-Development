@@ -30,14 +30,14 @@ namespace Datafication.Repositories.Implementations
                     Name = n.Name,
                     Bio = n.Bio,
                     ExternalUrl = n.ExternalUrl,
-                    IceCreams = n.IceCreams.Select(im => new IceCreamDto
+                    IceCreams = n.IceCreams.Select(ic => new IceCreamDto
                     {
-                        Id = im.Id,
-                        Name = im.Name,
-                        Description = im.Description
+                        Id = ic.Id,
+                        Name = ic.Name,
+                        Description = ic.Description
                     
-                    }),
-                    //CategoryOccurrance = n.CategoryOccurrance.Id
+                    })
+                    //CategoryOccurrance = n.Categories
                 }).FirstOrDefault();
             
             return manufacturer;

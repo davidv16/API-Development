@@ -17,15 +17,22 @@ namespace Datafication.Repositories.Implementations
             _dbContext = dbContext;
         }
 
-        //TODO: Finish
         public ImageDetailsDto GetImageById(int id) 
         {
-            var Image = _dbContext.Images.Where(i => i.Id == id).Select(i => new ImageDetailsDto 
-            {
-                Id = i.Id,
-                Url = i.Url,
-                //IceCream = i.IceCream
-            }).FirstOrDefault();
+            var Image = _dbContext.Images
+                .Include(i => i.IceCream)
+                .Where(i => i.Id == id)
+                .Select(i => new ImageDetailsDto 
+                {
+                    Id = i.Id,
+                    Url = i.Url,
+                    IceCream = new IceCreamDto
+                    {
+                        Id = i.IceCream.Id,
+                        Name = i.IceCream.Name,
+                        Description = i.IceCream.Description
+                    }
+                }).FirstOrDefault();
             return Image; 
         }
         

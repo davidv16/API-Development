@@ -29,16 +29,17 @@ namespace Datafication.Repositories.Implementations
 
             return IceCreams;
         }
-        //TODO: finish
+        
         public IceCreamDetailsDto GetIceCreamById(int id) 
         {
             var IceCream = _dbContext
                 .IceCreams
-                .Include(im => im.Images)
-                .Include(ca => ca.Categories)
+                .Include(i => i.Images)
+                .Include(i => i.Categories)
                 .Include(ma => ma.Manufacturer)
                 .Where(i => i.Id == id)
-                .Select(i => new IceCreamDetailsDto{
+                .Select(i => new IceCreamDetailsDto
+                {
                     Id = i.Id,
                     Name = i.Name,
                     Description = i.Description,
@@ -47,12 +48,12 @@ namespace Datafication.Repositories.Implementations
                         Id = im.Id,
                         Url = im.Url
                     }),
-                    /*Manufacturer = i.Manufacturer.Select(ma => ma.ManufacturerId == new ManufacturerDto
+                   Manufacturer = new ManufacturerDto
                     {
-                        Id = ma.Id,
-                        Name = ma.Name,
-                        ExternalUrl = ma.ExternalUrl
-                    }),*/
+                        Id = i.Manufacturer.Id,
+                        Name = i.Manufacturer.Name,
+                        ExternalUrl = i.Manufacturer.ExternalUrl
+                    },
                     Categories = i.Categories.Select(ca => new CategoryDto
                     {
                         Id = ca.Id,
@@ -60,8 +61,8 @@ namespace Datafication.Repositories.Implementations
                         ParentCategoryId = ca.ParentCategoryId
 
                     })
-                }).FirstOrDefault();
-            return IceCream;
+                });
+            return IceCream.FirstOrDefault();
         }
         
         public int CreateNewIceCream(IceCreamInputModel iceCream) 
@@ -98,14 +99,21 @@ namespace Datafication.Repositories.Implementations
         
         //TODO: Finish
         public void AddIceCreamToCategory(int iceCreamId, int categoryId) 
-        {/*
-            var iceCream = _dbContext.IceCreams
+        {
+          /*  var iceCream = _dbContext.IceCreams
                 .Where(a => a.Id == iceCreamId)
                 .FirstOrDefault();
 
             var category = _dbContext.Categories
                 .Where(ni => ni.Id == categoryId)
                 .FirstOrDefault();
+            
+            _dbContext.Categories.Where(ni => ni.Id == categoryId).Add(new IceCream
+            {
+                IceCreams = iceCream
+            });
+            */
+            /*
 
             var IceCreamCategoryItem = _dbContext.AuthorNewsItem
                 .Where(ani => ani.AuthorsId == authorId && ani.NewsItemsId == newsItemId)
@@ -119,9 +127,9 @@ namespace Datafication.Repositories.Implementations
                     NewsItemsId = newsItemId
                 });
 
-                _dbContext.SaveChanges();
-            }
             */
+                _dbContext.SaveChanges();
+            
         }
         
     }

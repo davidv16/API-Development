@@ -22,16 +22,19 @@ namespace Datafication.Repositories.Implementations
         //TODO: Finish
         public IEnumerable<IceCreamDto> GetIceCreamsByCategoryId(int id) 
         {
-           var IceCreams = _dbContext.IceCreams
-            .Include(ca => ca.Categories)
-            .Where(ca => ca.Id == id).Select(i => new IceCreamDto 
-            {
-                Id = i.Id,
-                Name = i.Name,
-                Description = i.Description
-            }).ToList();
             
-            return IceCreams;
+            var IceCream = _dbContext.Categories
+                .Include(ic => ic.IceCreams)
+                .Where(ic => ic.Id == id)
+                .Select(i => new IceCreamDto
+                {
+                    //Id = i.IceCreams.Id,
+                    //Name = i.IceCreams.Name,
+                    //Description = i.IceCreams.Description
+                });
+            
+            return IceCream.ToList();
+            
         }
         
         public int CreateNewCategory(CategoryInputModel category) 
