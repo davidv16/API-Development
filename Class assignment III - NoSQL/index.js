@@ -163,6 +163,66 @@ const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require
   })
 
   // 1.9. Get the total count of great white shark attacks
+  console.log('1.9. Get the total count of great white shark attacks')
+  await Shark.aggregate([
+    {
+      $match: { species: { $eq: GREAT_WHITE_SHARK } }
+    },
+    {
+      $lookup: {
+        from: 'attacks',
+        localField: '_id',
+        foreignField: 'sharkId',
+        as: 'attacks'
+      }
+    },
+    {
+      $unwind: {
+        path: '$attacks',
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $group: {
+        _id: '$species',
+        count: { $sum: 1 }
+      }
+    },
+  ], (err, sharks) => {
+    if (err) { throw new Error(err) }
+    //console.log(sharks.filter(shark => shark.attacks.length > 0))
+    console.log(sharks)
+  })
 
   // 1.10. Get the total count of hammerhead and tiger shark attacks
+  console.log('1.10. Get the total count of hammerhead and tiger shark attacks')
+  await Shark.aggregate([
+    {
+      $match: { species: { $in: [HAMMERHEAD_SHARK, TIGER_SHARK] } }
+    },
+    {
+      $lookup: {
+        from: 'attacks',
+        localField: '_id',
+        foreignField: 'sharkId',
+        as: 'attacks'
+      }
+    },
+    {
+      $unwind: {
+        path: '$attacks',
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $group: {
+        _id: '$species',
+        count: { $sum: 1 }
+      }
+    },
+  ], (err, sharks) => {
+    if (err) { throw new Error(err) }
+    //console.log(sharks.filter(shark => shark.attacks.length > 0))
+    console.log(sharks)
+  })
 })()
