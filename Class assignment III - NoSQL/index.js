@@ -114,6 +114,9 @@ const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require
       $match: {
         count: { $gt: 5 }
       }
+    },
+    {
+      $project: { count: 0 }
     }
   ], (err, sharks) => {
     if (err) { throw new Error(err) }
@@ -122,6 +125,42 @@ const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require
   })
 
   // 1.8. Get the area with the most registered shark attacks
+  console.log('1.8. Get the area with the most registered shark attacks')
+  await Area.aggregate([
+    {
+      $lookup: {
+        from: 'attacks',
+        localField: '_id',
+        foreignField: 'areaId',
+        as: 'attacks'
+      }
+    },
+    {
+      $unwind: {
+        path: '$attacks',
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $group: {
+        _id: '$name',
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $sort: { count: -1 }
+    },
+    {
+      $limit: 1
+    },
+    {
+      $project: { count: 0 }
+    }
+  ], (err, sharks) => {
+    if (err) { throw new Error(err) }
+    //console.log(sharks.filter(shark => shark.attacks.length > 0))
+    console.log(sharks)
+  })
 
   // 1.9. Get the total count of great white shark attacks
 
