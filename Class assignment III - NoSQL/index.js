@@ -3,9 +3,22 @@ const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require
 
 // 1.1. Get all sharks
 
+Shark.find({}, (err, sharks) => {
+  if(err) { throw new Error(err);}
+  console.log(sharks);
+});
 // 1.2. Get all tiger sharks
+Shark.find({"species": "tiger shark"}, (err, AllTigerSharks) => {
+  if(err) { throw new Error(err); }
+  console.log(AllTigerSharks)
+})
 
 // 1.3. Get all tiger and bull sharks
+//var filter = {}
+//Shark.filter({"species" == "tiger shark" && "species"== "bull shark" }, (err, AllTigerSharks) => {
+//  if(err) { throw new Error(err); }
+//  console.log(AllTigerSharks)
+//})
 
 // 1.4. Get all sharks except great white sharks
 

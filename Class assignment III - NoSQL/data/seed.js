@@ -24,6 +24,7 @@ Object.keys(connection.collections).forEach(collection => {
 //       ^^^[_]^^^
 Shark.insertMany([
     { species: TIGER_SHARK },
+    { species: TIGER_SHARK },
     { species: HAMMERHEAD_SHARK },
     { species: GREAT_WHITE_SHARK },
     { species: BULL_SHARK },
