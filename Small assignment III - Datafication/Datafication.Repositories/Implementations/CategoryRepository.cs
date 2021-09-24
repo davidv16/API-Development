@@ -19,21 +19,21 @@ namespace Datafication.Repositories.Implementations
             _dbContext = dbContext;
         }
         
-        //TODO: Finish
         public IEnumerable<IceCreamDto> GetIceCreamsByCategoryId(int id) 
         {
             
-            var IceCream = _dbContext.Categories
-                .Include(ic => ic.IceCreams)
-                .Where(ic => ic.Id == id)
-                .Select(i => new IceCreamDto
+            var IceCreams = _dbContext.Categories
+                .Include(c => c.IceCreams)
+                .Where(c => c.Id == id)
+                .Select(c => c.IceCreams.Select(i => new IceCreamDto
                 {
-                    //Id = i.IceCreams.Id,
-                    //Name = i.IceCreams.Name,
-                    //Description = i.IceCreams.Description
-                });
+                    Id = i.Id,
+                    Name = i.Name,
+                    Description = i.Description
+
+                })).FirstOrDefault();
             
-            return IceCream.ToList();
+            return IceCreams;
             
         }
         
