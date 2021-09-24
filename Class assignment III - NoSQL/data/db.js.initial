@@ -4,7 +4,8 @@ const attackSchema = require('../schemas/attackSchema');
 const areaSchema = require('../schemas/areaSchema');
 
 const connection = mongoose.createConnection('', {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 
 module.exports = {
