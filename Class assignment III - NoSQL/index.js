@@ -50,9 +50,9 @@ const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require
     },
     {
       $group: {
-        _id: '$_id',
+        _id: '$species'
       }
-    }
+    },
   ], (err, sharks) => {
     if (err) { throw new Error(err) }
     //console.log(sharks.filter(shark => shark.attacks.length > 0))
@@ -60,8 +60,66 @@ const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require
   })
 
   // 1.6. Get all areas with registered attacks
+  console.log('1.6. Get all areas with registered attacks')
+  await Area.aggregate([
+    {
+      $lookup: {
+        from: 'attacks',
+        localField: '_id',
+        foreignField: 'areaId',
+        as: 'attacks'
+      }
+    },
+    {
+      $unwind: {
+        path: '$attacks',
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $group: {
+        _id: '$name'
+      }
+    },
+  ], (err, sharks) => {
+    if (err) { throw new Error(err) }
+    //console.log(sharks.filter(shark => shark.attacks.length > 0))
+    console.log(sharks)
+  })
 
   // 1.7. Get all areas with more than 5 registered attacks
+  console.log('1.7. Get all areas with more than 5 registered attacks')
+  await Area.aggregate([
+    {
+      $lookup: {
+        from: 'attacks',
+        localField: '_id',
+        foreignField: 'areaId',
+        as: 'attacks'
+      }
+    },
+    {
+      $unwind: {
+        path: '$attacks',
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $group: {
+        _id: '$name',
+        count: { $sum: 1 }
+      }
+    },
+    {
+      $match: {
+        count: { $gt: 5 }
+      }
+    }
+  ], (err, sharks) => {
+    if (err) { throw new Error(err) }
+    //console.log(sharks.filter(shark => shark.attacks.length > 0))
+    console.log(sharks)
+  })
 
   // 1.8. Get the area with the most registered shark attacks
 
