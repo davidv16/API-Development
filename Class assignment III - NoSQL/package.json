@@ -1,0 +1,20 @@
+{
+	"name": "class-assignment-spy-on-shark",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"seed": "node ./data/seed.js",
+		"queries": "node ./index.js"
+	},
+	"keywords": [],
+	"author": "Arnar Leifsson",
+	"license": "ISC",
+	"dependencies": {
+		"mongodb": "^4.1.2",
+		"mongoose": "^5.13.9"
+	},
+	"devDependencies": {
+		"cli-progress": "^2.1.0"
+	}
+}
