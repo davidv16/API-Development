@@ -18,10 +18,10 @@ Shark.find({"species": "tiger shark"}, (err, AllTigerSharks) => {
 })
 
 // 1.3. Get all tiger and bull sharks
-//var filter = {}
-//Shark.filter({"species" == "tiger shark" && "species"== "bull shark" }, (err, AllTigerSharks) => {
+//var filter = ["tiger shark", "bull shark"]
+//Shark.find({"species": "tiger shark" $or "bull shark" }, (err, AllTigerBullSharks) => {
 //  if(err) { throw new Error(err); }
-//  console.log(AllTigerSharks)
+//  console.log(AllTigerBullSharks)
 //})
 
 // 1.4. Get all sharks except great white sharks
