@@ -97,39 +97,23 @@ namespace Datafication.Repositories.Implementations
             _dbContext.SaveChanges();
         }
         
-        //TODO: Finish
         public void AddIceCreamToCategory(int iceCreamId, int categoryId) 
         {
-          /*  var iceCream = _dbContext.IceCreams
-                .Where(a => a.Id == iceCreamId)
-                .FirstOrDefault();
 
-            var category = _dbContext.Categories
-                .Where(ni => ni.Id == categoryId)
-                .FirstOrDefault();
-            
-            _dbContext.Categories.Where(ni => ni.Id == categoryId).Add(new IceCream
+            var IceCreamToCategory = _dbContext
+                .IceCreams
+                .Include(i => i.Categories)
+                .FirstOrDefault(i => i.Id == iceCreamId);
+
+            var Category = _dbContext.Categories
+                .FirstOrDefault(c => c.Id == categoryId);
+
+            if (IceCreamToCategory != null || Category != null)
             {
-                IceCreams = iceCream
-            });
-            */
-            /*
-
-            var IceCreamCategoryItem = _dbContext.AuthorNewsItem
-                .Where(ani => ani.AuthorsId == authorId && ani.NewsItemsId == newsItemId)
-                .FirstOrDefault();
-
-            if (author != null && newsItem != null && authorNewsItem == null)
-            {
-                _dbContext.AuthorNewsItem.Add(new AuthorNewsItem
-                {
-                    AuthorsId = authorId,
-                    NewsItemsId = newsItemId
-                });
-
-            */
+                IceCreamToCategory.Categories.Add(Category);
                 _dbContext.SaveChanges();
-            
+            }
+
         }
         
     }

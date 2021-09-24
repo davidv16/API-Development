@@ -55,7 +55,7 @@ namespace Datafication.WebAPI.Controllers
             _iceCreamService.DeleteIceCream(iceCreamId);
             return NoContent();
         }
-/*
+
         [HttpPatch]
         [Route("{iceCreamId}/categories/{categoryId}")]
         public IActionResult AddIceCreamToCategory(int iceCreamId, int categoryId)
@@ -63,6 +63,5 @@ namespace Datafication.WebAPI.Controllers
             _iceCreamService.AddIceCreamToCategory(iceCreamId, categoryId);
             return NoContent();
         }
-        */
     }
 }

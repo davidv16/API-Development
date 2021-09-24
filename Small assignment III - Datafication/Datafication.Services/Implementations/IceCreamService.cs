@@ -14,10 +14,10 @@ namespace Datafication.Services.Implementations
         {
             _iceCreamRepository = iceCreamRepository;
         }
-/*
+
         public void AddIceCreamToCategory(int iceCreamId, int categoryId)
             => _iceCreamRepository.AddIceCreamToCategory(iceCreamId, categoryId);
-*/
+
         public int CreateNewIceCream(IceCreamInputModel iceCream)
             => _iceCreamRepository.CreateNewIceCream(iceCream);
 

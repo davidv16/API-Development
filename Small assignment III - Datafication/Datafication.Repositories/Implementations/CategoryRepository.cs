@@ -21,7 +21,6 @@ namespace Datafication.Repositories.Implementations
         
         public IEnumerable<IceCreamDto> GetIceCreamsByCategoryId(int id) 
         {
-            
             var IceCreams = _dbContext.Categories
                 .Include(c => c.IceCreams)
                 .Where(c => c.Id == id)

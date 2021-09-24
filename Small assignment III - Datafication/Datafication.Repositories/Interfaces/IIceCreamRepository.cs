@@ -11,6 +11,6 @@ namespace Datafication.Repositories.Interfaces
         int CreateNewIceCream(IceCreamInputModel iceCream);
         void UpdateIceCream(int id, IceCreamInputModel iceCream);
         void DeleteIceCream(int id);
-        //void AddIceCreamToCategory(int iceCreamId, int categoryId);
+        void AddIceCreamToCategory(int iceCreamId, int categoryId);
     }
 }

@@ -15,7 +15,6 @@ namespace Datafication.Repositories.Implementations
             _dbContext = dbContext;
         }
 
-        //TODO: FINISH
         public ManufacturerDetailsDto GetManufacturerById(int id) 
         {
             var manufacturer = _dbContext
@@ -36,8 +35,8 @@ namespace Datafication.Repositories.Implementations
                         Name = ic.Name,
                         Description = ic.Description
                     
-                    })
-                    //CategoryOccurrance = n.Categories
+                    }),
+                    CategoryOccurrance = n.IceCreams.Select(i => i.Categories).Count()
                 }).FirstOrDefault();
             
             return manufacturer;
