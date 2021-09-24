@@ -4,20 +4,21 @@
 
 ### DotnetCore ###
 # .NET Core build folders
-bin/
-obj/
+/**/bin/
+/**/obj/
 
 # Common node modules locations
-/node_modules
-/wwwroot/node_modules
+/**/node_modules
+/**/wwwroot/node_modules
 
 ### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
+/.vscode
+/**/.vscode/*
+/**/!.vscode/settings.json
+/**/!.vscode/tasks.json
+/**/!.vscode/launch.json
+/**/!.vscode/extensions.json
+/**/*.code-workspace
 
 # Local History for Visual Studio Code
 .history/
@@ -28,3 +29,4 @@ obj/
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudiocode
+/**/data/db.js
