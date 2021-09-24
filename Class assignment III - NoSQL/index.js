@@ -2,6 +2,10 @@ const { Area, Shark, Attack, connection } = require('./data/db');
 const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK } = require('./constants');
 
 // 1.1. Get all sharks
+Shark.find({}, (err, movies) => {
+    if(err) { throw new Error(err); }
+    console.log(movies);
+});
 
 // 1.2. Get all tiger sharks
 
