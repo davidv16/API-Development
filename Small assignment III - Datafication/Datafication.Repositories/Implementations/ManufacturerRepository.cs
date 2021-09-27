@@ -36,7 +36,7 @@ namespace Datafication.Repositories.Implementations
                         Description = ic.Description
                     
                     }),
-                    CategoryOccurrance = n.IceCreams.Select(i => i.Categories).Count()
+                    CategoryOccurrance = n.IceCreams.Select(i => i.Categories).Distinct().Count()
                 }).FirstOrDefault();
             
             return manufacturer;
