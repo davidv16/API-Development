@@ -1,5 +1,3 @@
-//const basketballFieldService = require('../services/basketballFieldService')
-
 module.exports = {
   queries: {
     allBasketballFields: async (parent, args, context) => {
@@ -10,9 +8,7 @@ module.exports = {
 
       for (const field of basketballFields) {
         // TODO: add pickup games to field
-        field.pickupGames = [
-          { id: 'asdf' }
-        ]
+        field.pickupGames = []
       }
 
       return basketballFields

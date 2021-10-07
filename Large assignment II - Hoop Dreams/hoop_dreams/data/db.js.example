@@ -1,20 +1,19 @@
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
+const pickupGameSchema = require('./schemas/pickupGameSchema')
+const playerSchema = require('./schemas/playerSchema')
 
 const connectionString = 'mongodb+srv://<user>:<pass>@<server>/hoop_dreams?retryWrites=true&w=majority'
 
-const execDatabaseQuery = async fn => {
-  const connection = new MongoClient(connectionString, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-  });
-  try {
-    await connection.connect();
-    return await fn(connection.db('hoop_dreams'));
-  } finally {
-    await connection.close();
-  }
-}
+const connection = mongoose.createConnection(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+
+const PickupGame = connection.model('PickupGame', pickupGameSchema)
+const Player = connection.model('Player', playerSchema)
 
 module.exports = {
-  execDatabaseQuery
+  connection,
+  PickupGame,
+  Player
 }
