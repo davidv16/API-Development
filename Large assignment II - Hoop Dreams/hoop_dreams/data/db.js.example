@@ -1,0 +1,21 @@
+//'mongodb+srv://hoop_dreams:whole-sterling-confirm-giveaway@cluster0.fbapu.mongodb.net/hoop_dreams?retryWrites=true&w=majority'
+const { MongoClient } = require('mongodb')
+
+const connectionString = 'mongodb+srv://<user>:<pass>@<server>/hoop_dreams?retryWrites=true&w=majority'
+
+const execDatabaseQuery = async fn => {
+  const connection = new MongoClient(connectionString, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  });
+  try {
+    await connection.connect();
+    return await fn(connection.db('hoop_dreams'));
+  } finally {
+    await connection.close();
+  }
+}
+
+module.exports = {
+  execDatabaseQuery
+}
