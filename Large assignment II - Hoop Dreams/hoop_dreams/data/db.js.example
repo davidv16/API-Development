@@ -1,4 +1,3 @@
-//'mongodb+srv://hoop_dreams:whole-sterling-confirm-giveaway@cluster0.fbapu.mongodb.net/hoop_dreams?retryWrites=true&w=majority'
 const { MongoClient } = require('mongodb')
 
 const connectionString = 'mongodb+srv://<user>:<pass>@<server>/hoop_dreams?retryWrites=true&w=majority'
