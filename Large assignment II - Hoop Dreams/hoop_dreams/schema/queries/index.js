@@ -4,7 +4,7 @@ module.exports = `
     allPickupGames: [PickupGame!]!
     allPlayers: [Player!]!
     basketballField(id: String!): BasketballField!
-    pickupGame: PickupGame!
-    player: Player!
+    pickupGame(id: String!): PickupGame!
+    player(id: String!): Player!
   }
 `
