@@ -11,10 +11,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "nodemon": "^2.0.13"
   },
   "dependencies": {
     "apollo-server": "^2.18.1",
+    "axios": "^0.22.0",
     "graphql": "^15.3.0"
   }
 }
