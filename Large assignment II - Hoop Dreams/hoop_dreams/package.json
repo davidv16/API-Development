@@ -17,6 +17,7 @@
     "apollo-server": "^2.18.1",
     "axios": "^0.22.0",
     "graphql": "^15.3.0",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "mongodb": "^4.1.3"
   }
 }
