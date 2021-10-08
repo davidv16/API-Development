@@ -41,7 +41,6 @@ query getFilm {
 5. (10%) Get the name, designation, average height and average lifespan of each species in
 the movie The Empire Strikes Back
 
-// TODO laga að quería leiti að "the empire strikes back"
 query getSpeciesByFilm {
   film (id: "ZmlsbXM6Mg==") {
     speciesConnection{
@@ -56,6 +55,20 @@ query getSpeciesByFilm {
 }
 
 6. (10%) Get the name, terrain and associated film title for every planet
+query getPlanets {
+  allPlanets {
+    planets{
+      name
+      terrains
+      filmConnection{
+        films{
+          title
+        }
+      }
+    }
+  }
+}
+
 7. (10%) For all starships, get their name, pilot names and the name of the home world for
 each pilot associated with the starship
 8. (10%) For all species, get their name and each persons name and eye color which is a part
