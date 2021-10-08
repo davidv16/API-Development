@@ -92,6 +92,21 @@ query allStarshipsAndPilots{
 
 8. (10%) For all species, get their name and each persons name and eye color which is a part
 of that species
+
+query allSpeciesNamesPersons{
+  allSpecies{
+    species{
+      name
+      personConnection{
+        people{
+          name
+        	eyeColor
+        }
+      }
+    }
+  }
+}
+
 9. (10%) For all species, get their name and each persons name and hair color which is a part
 of that species and for each person which is a part of that species get the name, model,
 vehicle class and manufacturer for each vehicle associated with them
