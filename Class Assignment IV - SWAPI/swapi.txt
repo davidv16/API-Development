@@ -134,3 +134,12 @@ query allSpeciesNamesHairColor {
 }
 
 10. (10%) Find Vader’s name, birth year, height and mass
+
+query vadersName {
+	person(id: "cGVvcGxlOjQ="){
+    name
+  	birthYear
+    height
+    mass
+  }
+}
