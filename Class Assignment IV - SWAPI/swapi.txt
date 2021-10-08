@@ -1,4 +1,5 @@
 1. (10%) Get total count of all films
+
 query AllFilms {
   allFilms {
     totalCount
@@ -6,6 +7,16 @@ query AllFilms {
 }
 
 2. (10%) Get the title, director and release date for all films
+
+query AllFilms {
+  allFilms {
+    films{
+      title
+      director
+      releaseDate
+    }
+  }
+}
 
 3. (10%) Get the title and release date of the last three films
 4. (10%) Get the id, title and opening crawl of a film which has the id ZmlsbXM6MQ==
