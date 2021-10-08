@@ -1,4 +1,4 @@
-const inputs = require('./inputs')
+const inputs = require('./input')
 const mutations = require('./mutations')
 const queries = require('./queries')
 const scalar = require('./scalar')
