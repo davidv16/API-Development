@@ -1,6 +1,6 @@
 1. (10%) Get total count of all films
 
-query AllFilms {
+query totalCountAllFilms {
   allFilms {
     totalCount
   }
@@ -30,6 +30,7 @@ query lastThreeFilms {
 }
 
 4. (10%) Get the id, title and opening crawl of a film which has the id ZmlsbXM6MQ==
+
 query getFilm {
   film (id: "ZmlsbXM6MQ=="){
     id
@@ -55,6 +56,7 @@ query getSpeciesByFilm {
 }
 
 6. (10%) Get the name, terrain and associated film title for every planet
+
 query getPlanets {
   allPlanets {
     planets{
@@ -71,6 +73,23 @@ query getPlanets {
 
 7. (10%) For all starships, get their name, pilot names and the name of the home world for
 each pilot associated with the starship
+
+query allStarshipsAndPilots{
+  allStarships{
+    starships{
+      name
+    	pilotConnection{
+        pilots{
+          name
+          homeworld{
+            name
+          }
+        }
+    	}
+    }
+  }
+}
+
 8. (10%) For all species, get their name and each persons name and eye color which is a part
 of that species
 9. (10%) For all species, get their name and each persons name and hair color which is a part
