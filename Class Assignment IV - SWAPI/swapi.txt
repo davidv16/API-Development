@@ -20,7 +20,7 @@ query AllFilms {
 
 3. (10%) Get the title and release date of the last three films
 
-query AllFilms {
+query lastThreeFilms {
   allFilms(last:3){
     films{
       title
@@ -30,6 +30,14 @@ query AllFilms {
 }
 
 4. (10%) Get the id, title and opening crawl of a film which has the id ZmlsbXM6MQ==
+query getFilm {
+  film (id: "ZmlsbXM6MQ=="){
+    id
+    title
+    openingCrawl
+  }
+}
+
 5. (10%) Get the name, designation, average height and average lifespan of each species in
 the movie The Empire Strikes Back
 6. (10%) Get the name, terrain and associated film title for every planet
