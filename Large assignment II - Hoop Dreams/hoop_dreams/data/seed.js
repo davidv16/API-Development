@@ -57,7 +57,7 @@ PickupGame.insertMany([
     }
     
 ]); 
-/*
+
 bar.update(50);
 
         
@@ -81,4 +81,3 @@ bar.update(50);
         ]);
         bar.update(100);
     
-*/
