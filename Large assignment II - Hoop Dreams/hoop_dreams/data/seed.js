@@ -1,5 +1,5 @@
 //const { Area, Shark, Attack, connection } = require('./db');
-const { Player, PickupGame, connection} = require('./db');
+const { Player, PickupGame, connection } = require('./db');
 //const { TIGER_SHARK, HAMMERHEAD_SHARK, GREAT_WHITE_SHARK, BULL_SHARK, WHALE_SHARK, NORTH_AMERICA, AUSTRALIA, EUROPE, MEXICO_BEACH, MALIBU_BEACH, GOLD_COAST, BONDI_BEACH, REYKJANES_BEACH } = require('../constants');
 const cliProgress = require('cli-progress');
 
@@ -56,12 +56,10 @@ PickupGame.insertMany([
      
     }
     
-]); 
-
-bar.update(50);
-
-        
-        Player.insertMany([
+], err => {
+    if (err) { throw new Error(err); }
+    bar.update(50);
+    Player.insertMany([
             {
                 name: "magic johnson",
                 playedGames: ["game 1", "game 2"]
@@ -78,6 +76,14 @@ bar.update(50);
                 name: "hinn gaurinn",
                 playedGames: ["game 7", "game 8"]
             }
-        ]);
-        bar.update(100);
+        ], err => {
+            if (err) { throw new Error(err); }
+            bar.update(100);
+    
+            bar.stop();
+            connection.close();
+        
+        });
+
+});
     
