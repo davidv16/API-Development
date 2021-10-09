@@ -26,32 +26,32 @@ PickupGame.insertMany([
     { 
         start: Date.now(),
         end: Date.now(),
-        location: "basketballfield",
-        registeredPlayers: ["player1", "player2"],
+        locationId: "basketballfield",
+        registeredPlayerIds: ["player1", "player2"],
         host: "player"
      
     },
     { 
         start: Date.now(),
         end: Date.now(),
-        location: "basketballfield1",
-        registeredPlayers: ["player2", "player4"],
+        locationId: "basketballfield1",
+        registeredPlayerIds: ["player2", "player4"],
         host: "player1"
      
     },
     { 
         start: Date.now(),
         end: Date.now(),
-        location: "basketballfield2",
-        registeredPlayers: ["player3", "player4"],
+        locationId: "basketballfield2",
+        registeredPlayerIds: ["player3", "player4"],
         host: "player2"
      
     },
     { 
         start: Date.now(),
         end: Date.now(),
-        location: "basketballfield3",
-        registeredPlayers: ["player11", "player21"],
+        locationId: "basketballfield3",
+        registeredPlayerIds: ["player11", "player21"],
         host: "player3"
      
     }
