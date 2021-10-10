@@ -1,0 +1,103 @@
+# Write your query or mutation here
+mutation createPlayer {
+	createPlayer(input: {name: "blaaaahh"}) {
+    name
+  }  
+}
+
+query allPlayers {
+	allPlayers{
+    id
+    name
+    playedGames{
+      id
+    	start
+      end
+    }
+  }
+}
+
+query player {
+  player(id: "6163357d9f758a323b5802db"){
+    id
+  	name
+    playedGames{
+      id
+    	start
+      end
+    }
+    
+  }
+}
+
+query allPickupGames {
+	allPickupGames{
+    id
+    start
+    end
+    location {
+      id
+    	name
+    }
+    registeredPlayers {
+    	id
+      name
+    }
+    host {
+      id 
+      name 
+    }
+  }
+}
+
+query pickupGame {
+	pickupGame(id: "6163357e9f758a323b5802e6"){
+    id
+  	start
+    end
+    location{
+      id
+    	name
+    }
+    registeredPlayers{
+      id
+    	name
+    }
+    host{
+      id
+    	name
+    }
+  }
+}
+
+mutation createPickupGame {
+	createPickupGame(input: {
+    start: "fös, 1. jan 2021 kl. 0:00",
+  	end : "fös, 1. jan 2021 kl. 0:00"
+    basketballFieldId: "ef42039e-77bc-40a3-8121-c2a5424ebcdb",
+    hostId: "6163357d9f758a323b5802dc"
+  }) {
+    start
+    end
+  }  
+}
+
+query getAllBasketBallFields {
+  allBasketballFields {
+    id
+  	name
+    capacity
+    yearOfCreation
+    pickupGames{
+      id 
+      start 
+      registeredPlayers{
+        id 
+        name
+      }
+    }
+    status
+  }
+
+}
+
