@@ -23,6 +23,16 @@ module.exports = {
     createPlayer: () => {},
     updatePlayer: () => {},
     removePlayer: () => {}
+  },
+  types: {
+    Player: {
+      playedGames: async (parent, args, { db }) => {
+        const { PickupGamePlayers, PickupGame } = db
+        const pickupGameIds = await PickupGamePlayers.find({ playerId: parent.id }).then((d) => d.map(i => i.pickupGameId))
+
+        return await PickupGame.find({ _id: { $in: pickupGameIds } })
+      }
+    }
   }
 }
 
