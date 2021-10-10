@@ -38,7 +38,14 @@ module.exports = {
           console.error(err)
         })
     },
-    removePickupGame: () => {},
+    removePickupGame: (parent, {id}) => {
+      return PickupGame.findByIdAndRemove(ObjectId(id))
+        .then(result => {
+          return result
+        }).catch(err => {
+          console.error(err)
+        })
+    },
     addPlayerToPickupGame: () => {},
     removePlayerFromPickupGame: () => {}
   },

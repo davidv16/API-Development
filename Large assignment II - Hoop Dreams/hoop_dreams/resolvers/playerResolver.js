@@ -33,7 +33,15 @@ module.exports = {
           console.error(err)
         })
     },
-    updatePlayer: () => {},
+    updatePlayer: (parent, {id, name}) => {
+      //const { id, name } = input;
+      return Player.findByIdAndUpdate(id, name)
+        .then(result => {
+          return {...result._doc}
+        }).catch(err => {
+          console.error(err)
+        })
+    },
     removePlayer: () => {}
   },
   types: {
