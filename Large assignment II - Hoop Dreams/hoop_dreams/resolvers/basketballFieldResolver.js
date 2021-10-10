@@ -1,28 +1,27 @@
 module.exports = {
   queries: {
-    allBasketballFields: async (parent, args, context) => {
-      const service = context.services.basketballFieldService
+    allBasketballFields: async (parent, args, { services }) => {
+      const service = services.basketballFieldService
       const basketballFields = await service.getAllBasketballFields()
-
-      console.log(basketballFields)
-
-      for (const field of basketballFields) {
-        // TODO: add pickup games to field
-        field.pickupGames = []
-      }
 
       return basketballFields
     },
-    basketballField: async (parent, args, context) => {
-      const service = context.services.basketballFieldService
+    basketballField: async (parent, args, { services }) => {
+      const service = services.basketballFieldService
       const basketballField = await service.getBasketballField(args.id)
 
-      // TODO: add pickup games to basketball field
-      basketballField.pickupGames = [
-        { id: 'asdf' }
-      ]
+      // TODO: handle 404 error
 
       return basketballField
+    }
+  },
+  types: {
+    BasketballField: {
+      pickupGames: async (parent, args, { db }) => {
+        const { PickupGame } = db
+
+        return await PickupGame.find({ locationId: parent.id })
+      }
     }
   }
 }
