@@ -1,18 +1,18 @@
 const { ObjectId } = require('mongodb')
-const { Player } = require('../data/schemas/playerSchema')
+const { Player } = require('../data/db')
 
 module.exports = {
   queries: {
-    allPlayers: (parent, args, { db }) => {
-      return db.Player.find()
+    allPlayers: () => {
+      return Player.find()
         .then(players => {
           return players
         }).catch(err => {
           console.error(err)
         })
     },
-    player: (parent, { id }, { db }) => {
-      return db.Player.findOne(ObjectId(id))
+    player: (parent, { id }) => {
+      return Player.findOne(ObjectId(id))
         .then(player => {
           return player
         }).catch(err => {
@@ -21,14 +21,14 @@ module.exports = {
     }
   },
   mutations: {
-    createPlayer: (parent , args, context, info) => {
-      const { name } = args.input;
+    createPlayer: (parent , {input}) => {
+      const { name } = input;
       const newPlayer = new Player({
         name
       })
       return newPlayer.save()
         .then(result => {
-          return{...result._doc}
+          return {...result._doc}
         }).catch(err => {
           console.error(err)
         })

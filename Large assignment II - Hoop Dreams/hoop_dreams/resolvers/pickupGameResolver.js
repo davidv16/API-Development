@@ -1,9 +1,10 @@
 const { ObjectId } = require('mongodb')
+const { PickupGame } = require('../data/db')
 
 module.exports = {
   queries: {
     allPickupGames: (parent, args, { db }) => {
-      const { PickupGame } = db
+      
       return PickupGame.find()
         .then(pickupGames => {
           return pickupGames
@@ -12,7 +13,6 @@ module.exports = {
         })
     },
     pickupGame: (parent, { id }, { db }) => {
-      const { PickupGame } = db
       return PickupGame.findOne(ObjectId(id))
         .then(pickupGame => {
           return pickupGame
@@ -23,7 +23,21 @@ module.exports = {
   },
 
   mutations: {
-    createPickupGame: () => {},
+    createPickupGame: (parent , {input}) => {
+      const { start, end, basketballFieldId, hostId } = input;
+      const newPickupGame = new PickupGame({
+        start,
+        end,
+        basketballFieldId,
+        hostId
+      })
+      return newPickupGame.save()
+        .then(result => {
+          return {...result._doc}
+        }).catch(err => {
+          console.error(err)
+        })
+    },
     removePickupGame: () => {},
     addPlayerToPickupGame: () => {},
     removePlayerFromPickupGame: () => {}
@@ -50,3 +64,12 @@ module.exports = {
     }
   }
 }
+
+/**
+ * input PickupGameInput {
+    start: Moment!
+    end: Moment!
+    basketballFieldId: String!
+    hostId: String!
+  }
+ */
