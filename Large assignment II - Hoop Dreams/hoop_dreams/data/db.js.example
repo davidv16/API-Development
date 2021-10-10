@@ -11,11 +11,12 @@ const connection = mongoose.createConnection(connectionString, {
 })
 
 const PickupGame = connection.model('PickupGame', pickupGameSchema)
-const PickupGamePlayers = connection.model('PickupGamePlayers', pickupGamePlayers)
+const PickupGamePlayers = connection.model('PickupGamePlayers', pickupGamePlayersSchema)
 const Player = connection.model('Player', playerSchema)
 
 module.exports = {
   connection,
   PickupGame,
+  PickupGamePlayers,
   Player
 }
