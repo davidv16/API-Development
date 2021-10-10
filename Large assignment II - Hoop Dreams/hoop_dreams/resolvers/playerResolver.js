@@ -12,7 +12,7 @@ module.exports = {
         })
     },
     player: (parent, { id }) => {
-      return Player.findOne(ObjectId(id))
+      return Player.findOne({ _id: ObjectId(id) })
         .then(player => {
           return player
         }).catch(err => {
