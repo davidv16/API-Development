@@ -5,11 +5,18 @@ const bar = new cliProgress.Bar({}, cliProgress.Presets.rect)
 bar.start(100, 0)
 
 // Drop all collections before execution
+for(const collection of Object.keys(connection.collections)) {
+  if (collection === 'pickupgameplayers') { PickupGamePlayers.collection.drop() }
+  if (collection === 'pickupgames') { PickupGame.collection.drop() }
+  if (collection === 'players') { Player.collection.drop() }
+}
+/*
 Object.keys(connection.collections).forEach(collection => {
-  if (collection === 'PickupGamePlayers') { PickupGamePlayers.collection.drop() }
-  if (collection === 'PickupGame') { PickupGame.collection.drop() }
-  if (collection === 'Player') { Player.collection.drop() }
+  if (collection === 'pickupgameplayers') { PickupGamePlayers.collection.drop() }
+  if (collection === 'pickupgame') { PickupGame.collection.drop() }
+  if (collection === 'player') { Player.collection.drop() }
 })
+*/
 
 // Create players
 Player.insertMany([
@@ -35,7 +42,7 @@ Player.insertMany([
     {
       start: new Date('2021-01-02'),
       end: new Date('2021-01-03'),
-      locationId: 'ef42039e-77bc-40a3-8121-c2a5424ebcdb',
+      locationId: '1798a72b-b619-4150-b604-5de20fa3cc56',
       hostId: players[1]._id.toString()
     }
   ], (err, games) => {
@@ -76,6 +83,8 @@ Player.insertMany([
       bar.update(100);
       bar.stop()
       connection.close()
+
+      console.log(Object.keys(connection.collections))
     })
   })
 })
