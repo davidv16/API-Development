@@ -1,26 +1,27 @@
 const { ObjectId } = require('mongodb')
-const { PickupGame } = require('../data/db')
 
 module.exports = {
   queries: {
-    allPickupGames: (parent, args, {db}) => {
-      return db.PickupGame.find()
+    allPickupGames: (parent, args, { db }) => {
+      const { PickupGame } = db
+      return PickupGame.find()
         .then(pickupGames => {
           return pickupGames
         }).catch(err => {
           console.error(err)
         })
-      },
-      pickupGame: (parent, {id}, {db}) => {
-        return db.PickupGame.findOne(ObjectId(id))
-          .then(pickupGame => {
-            return pickupGame
-          }).catch(err => {
-            console.error(err)
-          })
-      }
+    },
+    pickupGame: (parent, { id }, { db }) => {
+      const { PickupGame } = db
+      return PickupGame.findOne(ObjectId(id))
+        .then(pickupGame => {
+          return pickupGame
+        }).catch(err => {
+          console.error(err)
+        })
+    }
   },
-    
+
   mutations: {
     createPickupGame: () => {},
     removePickupGame: () => {},

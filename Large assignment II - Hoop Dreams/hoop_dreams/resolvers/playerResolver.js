@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb')
 
 module.exports = {
   queries: {
-    allPlayers: (parent, args, {db}) => {
+    allPlayers: (parent, args, { db }) => {
       return db.Player.find()
         .then(players => {
           return players
@@ -10,7 +10,7 @@ module.exports = {
           console.error(err)
         })
     },
-    player: (parent, {id}, {db}) => {
+    player: (parent, { id }, { db }) => {
       return db.Player.findOne(ObjectId(id))
         .then(player => {
           return player
@@ -35,4 +35,3 @@ module.exports = {
     }
   }
 }
-

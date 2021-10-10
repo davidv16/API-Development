@@ -5,18 +5,11 @@ const bar = new cliProgress.Bar({}, cliProgress.Presets.rect)
 bar.start(100, 0)
 
 // Drop all collections before execution
-for(const collection of Object.keys(connection.collections)) {
+for (const collection of Object.keys(connection.collections)) {
   if (collection === 'pickupgameplayers') { PickupGamePlayers.collection.drop() }
   if (collection === 'pickupgames') { PickupGame.collection.drop() }
   if (collection === 'players') { Player.collection.drop() }
 }
-/*
-Object.keys(connection.collections).forEach(collection => {
-  if (collection === 'pickupgameplayers') { PickupGamePlayers.collection.drop() }
-  if (collection === 'pickupgame') { PickupGame.collection.drop() }
-  if (collection === 'player') { Player.collection.drop() }
-})
-*/
 
 // Create players
 Player.insertMany([
@@ -30,7 +23,7 @@ Player.insertMany([
   if (err) { throw new Error(err) }
 
   console.log(players)
-  bar.update(33);
+  bar.update(33)
   // Create pickup games
   PickupGame.insertMany([
     {
@@ -49,7 +42,7 @@ Player.insertMany([
     if (err) { throw new Error(err) }
 
     console.log(games)
-    bar.update(66);
+    bar.update(66)
     // Assign players to pickup games
     PickupGamePlayers.insertMany([
       {
@@ -75,12 +68,12 @@ Player.insertMany([
       {
         pickupGameId: games[1]._id.toString(),
         playerId: players[5]._id.toString()
-      },
+      }
     ], (err, gamePlayers) => {
       if (err) { throw new Error(err) }
 
       console.log(gamePlayers)
-      bar.update(100);
+      bar.update(100)
       bar.stop()
       connection.close()
 

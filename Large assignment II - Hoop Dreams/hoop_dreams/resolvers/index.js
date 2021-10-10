@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require('moment')
 const { GraphQLScalarType } = require('graphql')
 const basketballFieldResolver = require('./basketballFieldResolver')
 const pickupGameResolver = require('./pickupGameResolver')

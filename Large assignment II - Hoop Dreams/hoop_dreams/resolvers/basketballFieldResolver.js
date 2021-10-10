@@ -1,7 +1,6 @@
 module.exports = {
   queries: {
-    allBasketballFields: async (parent, args, { db, services }) => {
-      const { PickupGame } = db
+    allBasketballFields: async (parent, args, { services }) => {
       const service = services.basketballFieldService
       const basketballFields = await service.getAllBasketballFields()
 
