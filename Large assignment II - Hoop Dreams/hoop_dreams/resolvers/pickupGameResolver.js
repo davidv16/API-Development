@@ -18,9 +18,6 @@ module.exports = {
             console.error(err)
           })
       }
-      
-    
-    
   },
     
   mutations: {
