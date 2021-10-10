@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const pickupGameSchema = require('./schemas/pickupGameSchema')
+const pickupGamePlayers = require('./schemas/pickupGamePlayers')
 const playerSchema = require('./schemas/playerSchema')
 
 const connectionString = 'mongodb+srv://<user>:<pass>@<server>/hoop_dreams?retryWrites=true&w=majority'
@@ -10,6 +11,7 @@ const connection = mongoose.createConnection(connectionString, {
 })
 
 const PickupGame = connection.model('PickupGame', pickupGameSchema)
+const PickupGamePlayers = connection.model('PickupGamePlayers', pickupGamePlayers)
 const Player = connection.model('Player', playerSchema)
 
 module.exports = {
