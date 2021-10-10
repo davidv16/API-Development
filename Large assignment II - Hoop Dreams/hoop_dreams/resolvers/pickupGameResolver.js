@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const { PickupGame } = require('../data/db')
 
 module.exports = {
   queries: {
@@ -25,7 +26,26 @@ module.exports = {
     removePickupGame: () => {},
     addPlayerToPickupGame: () => {},
     removePlayerFromPickupGame: () => {}
+  },
 
+  types: {
+    PickupGame: {
+      location: async (parent, args, { services }) => {
+        const service = services.basketballFieldService
 
+        return await service.getBasketballField(parent.locationId)
+      },
+      host: async (parent, args, { db }) => {
+        const { Player } = db
+
+        return await Player.findOne({ _id: ObjectId(parent.hostId) })
+      },
+      registeredPlayers: async (parent, args, { db }) => {
+        const { PickupGamePlayers, Player } = db
+        const playerIds = await PickupGamePlayers.find({ pickupGameId: parent.id }).then((d) => d.map(i => i.playerId))
+
+        return await Player.find({ _id: { $in: playerIds } })
+      }
+    }
   }
 }

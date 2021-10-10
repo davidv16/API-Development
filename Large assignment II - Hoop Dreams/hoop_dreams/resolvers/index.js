@@ -8,5 +8,6 @@ module.exports = {
     ...pickupGameResolver.queries,
     ...playerResolver.queries
   },
-  ...basketballFieldResolver.types
+  ...basketballFieldResolver.types,
+  ...pickupGameResolver.types
 }
