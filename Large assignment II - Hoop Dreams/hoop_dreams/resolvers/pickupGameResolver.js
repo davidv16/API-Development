@@ -4,7 +4,6 @@ const { PickupGame } = require('../data/db')
 module.exports = {
   queries: {
     allPickupGames: (parent, args, { db }) => {
-      
       return PickupGame.find()
         .then(pickupGames => {
           return pickupGames
@@ -23,8 +22,8 @@ module.exports = {
   },
 
   mutations: {
-    createPickupGame: (parent , {input}) => {
-      const { start, end, basketballFieldId, hostId } = input;
+    createPickupGame: (parent, { input }) => {
+      const { start, end, basketballFieldId, hostId } = input
       const newPickupGame = new PickupGame({
         start,
         end,
@@ -33,12 +32,12 @@ module.exports = {
       })
       return newPickupGame.save()
         .then(result => {
-          return {...result._doc}
+          return { ...result._doc }
         }).catch(err => {
           console.error(err)
         })
     },
-    removePickupGame: (parent, {id}) => {
+    removePickupGame: (parent, { id }) => {
       return PickupGame.findByIdAndRemove(ObjectId(id))
         .then(result => {
           return result

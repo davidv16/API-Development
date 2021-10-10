@@ -21,23 +21,22 @@ module.exports = {
     }
   },
   mutations: {
-    createPlayer: (parent , {input}) => {
-      const { name } = input;
+    createPlayer: (parent, { input }) => {
+      const { name } = input
       const newPlayer = new Player({
         name
       })
       return newPlayer.save()
         .then(result => {
-          return {...result._doc}
+          return { ...result._doc }
         }).catch(err => {
           console.error(err)
         })
     },
-    updatePlayer: (parent, {id, name}) => {
-      //const { id, name } = input;
+    updatePlayer: (parent, { id, name }) => {
       return Player.findByIdAndUpdate(id, name)
         .then(result => {
-          return {...result._doc}
+          return { ...result._doc }
         }).catch(err => {
           console.error(err)
         })
