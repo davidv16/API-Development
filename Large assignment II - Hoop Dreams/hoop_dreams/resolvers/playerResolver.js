@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb')
+const { Player } = require('../data/schemas/playerSchema')
 
 module.exports = {
   queries: {
@@ -20,7 +21,18 @@ module.exports = {
     }
   },
   mutations: {
-    createPlayer: () => {},
+    createPlayer: (parent , args, context, info) => {
+      const { name } = args.input;
+      const newPlayer = new Player({
+        name
+      })
+      return newPlayer.save()
+        .then(result => {
+          return{...result._doc}
+        }).catch(err => {
+          console.error(err)
+        })
+    },
     updatePlayer: () => {},
     removePlayer: () => {}
   }
