@@ -32,6 +32,14 @@ class PickupGameAlreadyPassedError extends ApolloError {
   }
 }
 
+class PickupGameMinMaxTimeError extends ApolloError {
+  constructor (message = 'Pickup game has to be within allowed time limit') {
+    super(null, null, message)
+    this.name = 'PickupGameMinMaxTimeError'
+    this.code = 400
+  }
+}
+
 class NotFoundError extends ApolloError {
   constructor (message = 'Id was not found') {
     super(null, null, message)
@@ -45,6 +53,7 @@ module.exports = {
   BasketballFieldClosedError,
   PickupGameOverlapError,
   PickupGameAlreadyPassedError,
+  PickupGameMinMaxTimeError,
   NotFoundError,
   UserInputError
 }
