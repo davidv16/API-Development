@@ -7,7 +7,7 @@ module.exports = {
     allPickupGames: (parent, args, { db }) => {
       const { PickupGame } = db
 
-      return PickupGame.find()
+      return PickupGame.find({ deleted: false })
         .then(pickupGames => {
           return pickupGames
         }).catch(err => {
@@ -75,27 +75,65 @@ module.exports = {
     removePickupGame: (parent, { id }, { db }) => {
       const { PickupGame } = db
 
-      return PickupGame.findByIdAndRemove({ _id: ObjectId(id) })
-        .then(result => {
-          return result
-        }).catch(err => {
-          console.error(err)
-        })
+      // TODO: Check if pickup game exists
+      //
+
+      return PickupGame.findByIdAndUpdate(ObjectId(id), { deleted: true })
+        .then(() => { return true })
+        .catch((err) => { return new Error(err) })
     },
-    addPlayerToPickupGame: (parent, { playerId, pickupGameId }, { db }) => {
+    addPlayerToPickupGame: async (parent, { playerId, pickupGameId }, { db, services }) => {
+      const { PickupGame, PickupGamePlayers, Player } = db
+      const service = services.basketballFieldService
+
+      const player = await Player.findOne({ _id: playerId })
+      const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
+      
+      // Check if player exists
+      if (!player) { return new errors.NotFoundError() }
+      
+      // Check if pickup game exists
+      if (!pickupGame) { return new errors.NotFoundError() }
+      
+      // Check if pickup game capacity has exceded
+      const basketballField = await service.getBasketballField(PickupGame.locationId)
+      const pickupGames = await PickupGamePlayers.find({ pickupGameId })
+      if (basketballField.capacity <= pickupGames.length) { return new errors.PickupGameExceedMaximumError() }
+      
+      // Check if pickup game has passed
+      const dateHasPassed = moment.duration(moment(start.value).diff(moment(new Date()))).asMinutes() < 0
+      if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
+
+      // TODO: Check if player is registered to pickup game
+      // TODO: check if player is registered to a game that overlaps
+
+      await PickupGamePlayers.insert({ playerId, pickupGameId })
+
+      return pickupGame
+    },
+    removePlayerFromPickupGame: async (parent, { playerId, pickupGameId }, { db }) => {
       const { PickupGame, PickupGamePlayers, Player } = db
 
-      // TODO: check if player exists
-      // TODO: check if pickup game exists
-      // TODO: check if pickup game capacity has exceded
-      // TODO: check if pickup game has elapsed
-    },
-    removePlayerFromPickupGame: (parent, { playerId, pickupGameId }, { db }) => {
-      const { PickupGame, PickupGamePlayers, Player } = db
+      const player = await Player.findOne({ _id: playerId })
+      const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
 
-      // TODO: check if player exists
-      // TODO: check if pickup game exists
-      // TODO: check if pickup game has elapsed
+      // Check if player exists
+      if (!player) { return new errors.NotFoundError() }
+      
+      // Check if pickup game exists
+      if (!pickupGame) { return new errors.NotFoundError() }
+
+      // TODO: Check if player is registered to pickup game
+
+      // Check if pickup game has passed
+      const dateHasPassed = moment.duration(moment(start.value).diff(moment(new Date()))).asMinutes() < 0
+      if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
+
+      return PickupGamePlayers.deleteOne({ playerId, pickupGameId })
+        .then(() => { return true })
+        .catch((err) => { return new Error(err) })
+
+      // TODO: If player was host assign new host to game, if no player is left mark game as deleted
     }
   },
 

@@ -1,17 +1,21 @@
 const { ObjectId } = require('mongodb')
-const { Player } = require('../data/db')
+const errors = require('../errors')
 
 module.exports = {
   queries: {
-    allPlayers: () => {
-      return Player.find()
+    allPlayers: (parent, args, { db }) => {
+      const { Player } = db
+
+      return Player.find({ deleted: false })
         .then(players => {
           return players
         }).catch(err => {
           console.error(err)
         })
     },
-    player: (parent, { id }) => {
+    player: (parent, { id }, { db }) => {
+      const { Player } = db
+
       return Player.findOne({ _id: ObjectId(id) })
         .then(player => {
           return player
@@ -21,11 +25,13 @@ module.exports = {
     }
   },
   mutations: {
-    createPlayer: (parent, { input }) => {
+    createPlayer: (parent, { input }, { db }) => {
+      const { Player } = db
       const { name } = input
       const newPlayer = new Player({
         name
       })
+
       return newPlayer.save()
         .then(result => {
           return { ...result._doc }
@@ -33,15 +39,23 @@ module.exports = {
           console.error(err)
         })
     },
-    updatePlayer: (parent, { id, name }) => {
-      return Player.findByIdAndUpdate(id, name)
+    updatePlayer: async (parent, { id, name }, { db }) => {
+      const { Player } = db
+
+      return Player.findByIdAndUpdate(ObjectId(id), { name })
         .then(result => {
           return { ...result._doc }
         }).catch(err => {
           console.error(err)
         })
     },
-    removePlayer: () => {}
+    removePlayer: async (parent, { id }, { db }) => {
+      const { Player } = db
+
+      return await Player.findByIdAndUpdate(ObjectId(id), { deleted: true })
+        .then(() => { return true })
+        .catch(() => { return new errors.NoFoundError() })
+    }
   },
   types: {
     Player: {
