@@ -11,6 +11,9 @@ module.exports = {
       const basketballField = await service.getBasketballField(args.id)
 
       // TODO: handle 404 error
+      // done?
+      // Check if basketballField exists
+      if(!basketballField) { return new erros.NotFounderror() }
 
       return basketballField
     }
