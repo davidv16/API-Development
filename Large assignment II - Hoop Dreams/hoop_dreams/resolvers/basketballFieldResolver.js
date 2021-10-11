@@ -1,3 +1,5 @@
+const errors = require('../errors')
+
 module.exports = {
   queries: {
     allBasketballFields: async (parent, args, { services }) => {
@@ -6,26 +8,24 @@ module.exports = {
 
       return basketballFields
     },
-    basketballField: async (parent, args, { services }) => {
+    basketballField: async (parent, { id }, { services }) => {
       const service = services.basketballFieldService
-      const basketballField = await service.getBasketballField(args.id)
+      const basketballField = await service.getBasketballField(id)
 
-      // TODO: handle 404 error
-      // done?
+      console.log(basketballField)
+
       // Check if basketballField exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
-      if(!basketballField) { return new erros.NotFounderror() }
+      if(!basketballField) { return new errors.NotFoundError() }
 
       return basketballField
     }
   },
   types: {
     BasketballField: {
-      pickupGames: async (parent, args, { db }) => {
+      pickupGames: async ({ id }, args, { db }) => {
         const { PickupGame } = db
 
-        return await PickupGame.find({ basketballFieldId: parent.id, deleted: false })
+        return await PickupGame.find({ basketballFieldId: id, deleted: false })
       }
     }
   }
