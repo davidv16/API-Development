@@ -25,7 +25,7 @@ module.exports = {
       pickupGames: async (parent, args, { db }) => {
         const { PickupGame } = db
 
-        return await PickupGame.find({ basketballFieldId: parent.id })
+        return await PickupGame.find({ basketballFieldId: parent.id, deleted: false })
       }
     }
   }

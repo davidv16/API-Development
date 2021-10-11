@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb')
+const { Types: { ObjectId } } = require('mongoose')
 const errors = require('../errors')
 
 module.exports = {

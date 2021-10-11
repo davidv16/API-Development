@@ -1,28 +1,24 @@
 const moment = require('moment')
-const { ObjectId } = require('mongodb')
+const { Types: { ObjectId } } = require('mongoose')
 const errors = require('../errors')
 
 module.exports = {
   queries: {
-    allPickupGames: (parent, args, { db }) => {
+    allPickupGames: async (parent, args, { db }) => {
       const { PickupGame } = db
+      const pickupGames = await PickupGame.find({ deleted: false })
 
-      return PickupGame.find({ deleted: false })
-        .then(pickupGames => {
-          return pickupGames
-        }).catch(err => {
-          console.error(err)
-        })
+      return pickupGames
     },
-    pickupGame: (parent, { id }, { db }) => {
+    pickupGame: async (parent, { id }, { db }) => {
       const { PickupGame } = db
+      const pickupGame = await PickupGame.findOne({ _id: ObjectId(id), deleted: false })
 
-      return PickupGame.findOne({ _id: ObjectId(id) })
-        .then(pickupGame => {
-          return pickupGame
-        }).catch(err => {
-          console.error(err)
-        })
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+      resource with the provided id exists */
+      if (!pickupGame) { return new errors.NotFoundError() }
+
+      return pickupGame
     }
   },
 
@@ -40,8 +36,13 @@ module.exports = {
       
       // Check if player exists
       /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
+      resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
+
+      // Check if basketball field exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+      resource with the provided id exists */
+      if (!basketballField) { return new errors.NotFoundError() }
 
       /** 1. Pickup games cannot be added to a basketball field which has a status of */
       // Check if new game is on a closed field
@@ -83,7 +84,7 @@ module.exports = {
 
       // Check if pickup game exists
       /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
+      resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
 
       return PickupGame.findByIdAndUpdate(ObjectId(id), { deleted: true })
@@ -99,12 +100,12 @@ module.exports = {
       
       // Check if player exists
       /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
+      resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
       
       // Check if pickup game exists
       /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
+      resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
       
       // Check if pickup game capacity has exceded
@@ -141,12 +142,12 @@ module.exports = {
 
       // Check if player exists
       /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
+      resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
       
       // Check if pickup game exists
       /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
+      resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
 
       // Check if player is registered to pickup game
@@ -159,10 +160,24 @@ module.exports = {
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
       return PickupGamePlayers.deleteOne({ playerId, pickupGameId })
-        .then(() => { return true })
-        .catch((err) => { return new Error(err) })
+      .then(async () => {
+          // If player was host assign new host to game, if no player is left mark game as deleted
+          const remainingPlayerIds = await PickupGamePlayers.find({ pickupGameId }).then((d) => d.map(i => i.playerId))
+          console.log(remainingPlayerIds)
+          
+          if (remainingPlayerIds.length === 0) {
+            pickupGame.deleted = true
+            pickupGame.save()  
+          } else if (playerId === pickupGame.hostId) {
+            const newHost = await Player.findOne({ _id: remainingPlayerIds }).sort({ name: 1 })
 
-      // TODO: If player was host assign new host to game, if no player is left mark game as deleted
+            pickupGame.hostId = newHost._id
+            pickupGame.save()
+          }
+    
+          return true
+        })
+        .catch((err) => { return new Error(err) })
     }
   },
 
