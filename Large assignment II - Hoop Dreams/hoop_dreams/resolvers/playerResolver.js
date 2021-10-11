@@ -3,41 +3,35 @@ const errors = require('../errors')
 
 module.exports = {
   queries: {
-    allPlayers: (parent, args, { db }) => {
+    allPlayers: async (parent, args, { db }) => {
       const { Player } = db
+      const players = await Player.find({ deleted: false })
+        .catch(err => { throw new Error(err) })
 
-      return Player.find({ deleted: false })
-        .then(players => {
-          return players
-        }).catch(err => {
-          console.error(err)
-        })
+      return players
     },
-    player: (parent, { id }, { db }) => {
+    player: async (parent, { id }, { db }) => {
       const { Player } = db
+      const player = await Player.findOne({ _id: ObjectId(id), deleted: false })
 
-      return Player.findOne({ _id: ObjectId(id) })
-        .then(player => {
-          return player
-        }).catch(err => {
-          console.error(err)
-        })
+      // Check if player exists
+      if (!player) { return new errors.NotFoundError() }
+
+      return player
     }
   },
   mutations: {
-    createPlayer: (parent, { input }, { db }) => {
+    createPlayer: async (parent, { input }, { db }) => {
       const { Player } = db
       const { name } = input
       const newPlayer = new Player({
         name
       })
 
-      return newPlayer.save()
-        .then(result => {
-          return { ...result._doc }
-        }).catch(err => {
-          console.error(err)
-        })
+      await newPlayer.save()
+        .catch(err => { throw new Error(err) })
+
+      return newPlayer
     },
     updatePlayer: async (parent, { id, name }, { db }) => {
       const { Player } = db
@@ -45,21 +39,26 @@ module.exports = {
       const player = await Player.findOne({ _id: ObjectId(id) })
 
       // Check if player exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-    resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
 
       player.name = name
-      player.save()
+      await player.save()
+        .catch(err => { throw new Error(err) })
 
       return player
     },
     removePlayer: async (parent, { id }, { db }) => {
       const { Player } = db
+      const player = await Player.findOne({ _id: ObjectId(id), deleted: false })
 
-      return await Player.findByIdAndUpdate(ObjectId(id), { deleted: true })
-        .then(() => { return true })
-        .catch(() => { return new errors.NoFoundError() })
+      // Check if player exists
+      if (!player) { return new errors.NotFoundError() }
+
+      player.deleted = true
+      await player.save()
+        .catch(err => { throw new Error(err) })
+
+      return true
     }
   },
   types: {
