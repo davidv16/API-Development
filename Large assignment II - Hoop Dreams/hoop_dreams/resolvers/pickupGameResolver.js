@@ -72,11 +72,13 @@ module.exports = {
           console.error(err)
         })
     },
-    removePickupGame: (parent, { id }, { db }) => {
+    removePickupGame: async (parent, { id }, { db }) => {
       const { PickupGame } = db
 
-      // TODO: Check if pickup game exists
-      //
+      const pickupGame = await PickupGame.findOne({ _id: id })
+
+      // Check if pickup game exists
+      if (!pickupGame) { return new errors.NotFoundError() }
 
       return PickupGame.findByIdAndUpdate(ObjectId(id), { deleted: true })
         .then(() => { return true })
