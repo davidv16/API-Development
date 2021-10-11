@@ -52,8 +52,14 @@ module.exports = {
       // Check if new game is within allowed time limit of min 5 minutes, max 2 hours
       if (duration < 5 || duration > 120) { return new errors.PickupGameMinMaxTimeError() }
 
-      // TODO: check if new game overlaps with another game on selected field
-      /** 2. Pickup games cannot overlap if they are being played in the same basketball field */
+      // Check if new game overlaps with another game on selected field
+      const overlappedGames = pickupGames.filter((game) => {
+        return game.start <= new Date(start.value) && new Date(start.value) <= game.end
+          || game.start <= new Date(end.value) && new Date(end.value) <= game.end
+          || new Date(start.value) <= game.start && game.start <= new Date(end.value)
+          || new Date(start.value) <= game.end && game.end <= new Date(end.value)
+      })
+      if (overlappedGames.length > 0) { return new errors.PickupGameOverlapError() }
 
       const newPickupGame = new PickupGame({
         start: start.value,
@@ -119,7 +125,16 @@ module.exports = {
       const alreadyRegistered = await PickupGamePlayers.find({ playerId, pickupGameId })
       if (alreadyRegistered.length !== 0) { return new errors.PickupGamePlayerAlreadyRegisteredError() }
 
-      // TODO: check if player is registered to a game that overlaps
+      // Check if player has any overlappsing games
+      const playerPickupGameIds = await PickupGamePlayers.find({ playerId }).then((d) => d.map((i) => i.pickupGameId))
+      const playerPickupGames = await PickupGame.find({ _id: { $in: playerPickupGameIds } })
+      const overlappedGames = playerPickupGames.filter((game) => {
+        return game.start <= new Date(pickupGame.start) && new Date(pickupGame.start) <= game.end
+          || game.start <= new Date(pickupGame.end) && new Date(pickupGame.end) <= game.end
+          || new Date(pickupGame.start) <= game.start && game.start <= new Date(pickupGame.end)
+          || new Date(pickupGame.start) <= game.end && game.end <= new Date(pickupGame.end)
+      })
+      if (overlappedGames.length > 0) { return new errors.PickupGameOverlapError() }
 
       const newPickupGamePlayers = PickupGamePlayers({
         playerId,
