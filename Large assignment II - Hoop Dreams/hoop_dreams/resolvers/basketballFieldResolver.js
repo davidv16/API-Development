@@ -15,7 +15,7 @@ module.exports = {
       console.log(basketballField)
 
       // Check if basketballField exists
-      if(!basketballField) { return new errors.NotFoundError() }
+      if (!basketballField) { return new errors.NotFoundError() }
 
       return basketballField
     }

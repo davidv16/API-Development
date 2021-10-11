@@ -40,7 +40,7 @@ module.exports = {
 
       // Check if new game is on a closed field
       if (basketballField.status === 'CLOSED') { return new errors.BasketballFieldClosedError() }
-      
+
       // Check if new game is not created at a time that has passed
       const dateHasPassed = moment.duration(moment(start.value).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
@@ -100,18 +100,18 @@ module.exports = {
 
       const player = await Player.findOne({ _id: playerId })
       const pickupGame = await PickupGame.findOne({ _id: pickupGameId, deleted: false })
-      
+
       // Check if player exists
       if (!player) { return new errors.NotFoundError() }
-      
+
       // Check if pickup game exists
       if (!pickupGame) { return new errors.NotFoundError() }
-      
+
       // Check if pickup game capacity has exceded
       const basketballField = await service.getBasketballField(pickupGame.basketballFieldId)
       const pickupGames = await PickupGamePlayers.find({ pickupGameId })
       if (basketballField.capacity <= pickupGames.length) { return new errors.PickupGameExceedMaximumError() }
-      
+
       // Check if pickup game has passed
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
@@ -139,7 +139,7 @@ module.exports = {
 
       // Check if player exists
       if (!player) { return new errors.NotFoundError() }
-      
+
       // Check if pickup game exists
       if (!pickupGame) { return new errors.NotFoundError() }
 
@@ -152,21 +152,21 @@ module.exports = {
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
       return PickupGamePlayers.deleteOne({ playerId, pickupGameId })
-      .then(async () => {
+        .then(async () => {
           // If player was host assign new host to game, if no player is left mark game as deleted
           const remainingPlayerIds = await PickupGamePlayers.find({ pickupGameId }).then((d) => d.map(i => i.playerId))
           console.log(remainingPlayerIds)
-          
+
           if (remainingPlayerIds.length === 0) {
             pickupGame.deleted = true
-            pickupGame.save()  
+            pickupGame.save()
           } else if (playerId === pickupGame.hostId) {
             const newHost = await Player.findOne({ _id: remainingPlayerIds }).sort({ name: 1 })
 
             pickupGame.hostId = newHost._id
             pickupGame.save()
           }
-    
+
           return true
         })
         .catch((err) => { return new Error(err) })
@@ -194,12 +194,3 @@ module.exports = {
     }
   }
 }
-
-/**
- * input PickupGameInput {
-    start: Moment!
-    end: Moment!
-    basketballFieldId: String!
-    hostId: String!
-  }
- */
