@@ -90,7 +90,6 @@ module.exports = {
 
       const player = await Player.findOne({ _id: playerId })
       const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
-      console.log(player, pickupGame)
       
       // Check if player exists
       if (!player) { return new errors.NotFoundError() }
@@ -105,12 +104,10 @@ module.exports = {
       
       // Check if pickup game has passed
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
-      console.log(pickupGame.start, dateHasPassed)
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
       // Check if player is registered to pickup game
       const alreadyRegistered = await PickupGamePlayers.find({ playerId, pickupGameId })
-      console.log(alreadyRegistered, alreadyRegistered.length)
       if (alreadyRegistered.length !== 0) { return new errors.PickupGamePlayerAlreadyRegisteredError() }
 
       // TODO: check if player is registered to a game that overlaps
@@ -138,12 +135,10 @@ module.exports = {
 
       // Check if player is registered to pickup game
       const alreadyRegistered = await PickupGamePlayers.find({ playerId, pickupGameId })
-      console.log(alreadyRegistered, alreadyRegistered.length)
       if (alreadyRegistered.length === 0) { return new errors.PickupGamePlayerNotRegisteredError() }
 
       // Check if pickup game has passed
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
-      console.log(pickupGame.start, dateHasPassed)
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
       return PickupGamePlayers.deleteOne({ playerId, pickupGameId })
