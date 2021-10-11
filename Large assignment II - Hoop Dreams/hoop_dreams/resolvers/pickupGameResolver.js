@@ -136,7 +136,10 @@ module.exports = {
       // Check if pickup game exists
       if (!pickupGame) { return new errors.NotFoundError() }
 
-      // TODO: Check if player is registered to pickup game
+      // Check if player is registered to pickup game
+      const alreadyRegistered = await PickupGamePlayers.find({ playerId, pickupGameId })
+      console.log(alreadyRegistered, alreadyRegistered.length)
+      if (alreadyRegistered.length === 0) { return new errors.PickupGamePlayerNotRegisteredError() }
 
       // Check if pickup game has passed
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
