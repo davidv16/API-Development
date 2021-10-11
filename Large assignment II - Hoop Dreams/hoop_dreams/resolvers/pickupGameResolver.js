@@ -32,19 +32,12 @@ module.exports = {
       const player = await Player.findOne({ _id: ObjectId(hostId), delete: false })
       const pickupGames = await PickupGame.find({ basketballFieldId: basketballFieldId })
 
-      console.log(pickupGames)
-      
       // Check if player exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
 
       // Check if basketball field exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!basketballField) { return new errors.NotFoundError() }
 
-      /** 1. Pickup games cannot be added to a basketball field which has a status of */
       // Check if new game is on a closed field
       if (basketballField.status === 'CLOSED') { return new errors.BasketballFieldClosedError() }
       
@@ -86,42 +79,40 @@ module.exports = {
     removePickupGame: async (parent, { id }, { db }) => {
       const { PickupGame } = db
 
-      const pickupGame = await PickupGame.findOne({ _id: id })
+      const pickupGame = await PickupGame.findOne({ _id: id, deleted: false })
 
       // Check if pickup game exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
 
-      return PickupGame.findByIdAndUpdate(ObjectId(id), { deleted: true })
-        .then(() => { return true })
-        .catch((err) => { return new Error(err) })
+      // Check if pickup game has passed
+      const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
+      if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
+
+      pickupGame.deleted = true
+      await pickupGame.save()
+        .catch(err => { throw new Error(err) })
+
+      return true
     },
     addPlayerToPickupGame: async (parent, { playerId, pickupGameId }, { db, services }) => {
       const { PickupGame, PickupGamePlayers, Player } = db
       const service = services.basketballFieldService
 
       const player = await Player.findOne({ _id: playerId })
-      const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
+      const pickupGame = await PickupGame.findOne({ _id: pickupGameId, deleted: false })
       
       // Check if player exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
       
       // Check if pickup game exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
       
       // Check if pickup game capacity has exceded
-      /** 4. Players cannot be added to pickup games, if the maximum capacity has been reached for that basketball field */
       const basketballField = await service.getBasketballField(pickupGame.basketballFieldId)
       const pickupGames = await PickupGamePlayers.find({ pickupGameId })
       if (basketballField.capacity <= pickupGames.length) { return new errors.PickupGameExceedMaximumError() }
       
       // Check if pickup game has passed
-      /** 3. Players cannot be added to pickup games that have already passed */
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
@@ -144,16 +135,12 @@ module.exports = {
       const { PickupGame, PickupGamePlayers, Player } = db
 
       const player = await Player.findOne({ _id: playerId })
-      const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
+      const pickupGame = await PickupGame.findOne({ _id: pickupGameId, deleted: false })
 
       // Check if player exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
       
       // Check if pickup game exists
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
 
       // Check if player is registered to pickup game
@@ -161,7 +148,6 @@ module.exports = {
       if (alreadyRegistered.length === 0) { return new errors.PickupGamePlayerNotRegisteredError() }
 
       // Check if pickup game has passed
-      /** 5. Players cannot be removed from pickup games that have already passed  */
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
