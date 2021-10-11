@@ -39,8 +39,11 @@ module.exports = {
       console.log(pickupGames)
       
       // Check if player exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
 
+      /** 1. Pickup games cannot be added to a basketball field which has a status of */
       // Check if new game is on a closed field
       if (basketballField.status === 'CLOSED') { return new errors.BasketballFieldClosedError() }
       
@@ -57,7 +60,8 @@ module.exports = {
       if (duration < 5 || duration > 120) { return new errors.PickupGameMinMaxTimeError() }
 
       // TODO: check if new game overlaps with another game on selected field
-      
+      /** 2. Pickup games cannot overlap if they are being played in the same basketball field */
+
       const newPickupGame = new PickupGame({
         start: start.value,
         end: end.value,
@@ -78,6 +82,8 @@ module.exports = {
       const pickupGame = await PickupGame.findOne({ _id: id })
 
       // Check if pickup game exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
 
       return PickupGame.findByIdAndUpdate(ObjectId(id), { deleted: true })
@@ -92,17 +98,23 @@ module.exports = {
       const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
       
       // Check if player exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
       
       // Check if pickup game exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
       
       // Check if pickup game capacity has exceded
+      /** 4. Players cannot be added to pickup games, if the maximum capacity has been reached for that basketball field */
       const basketballField = await service.getBasketballField(pickupGame.basketballFieldId)
       const pickupGames = await PickupGamePlayers.find({ pickupGameId })
       if (basketballField.capacity <= pickupGames.length) { return new errors.PickupGameExceedMaximumError() }
       
       // Check if pickup game has passed
+      /** 3. Players cannot be added to pickup games that have already passed */
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
@@ -128,9 +140,13 @@ module.exports = {
       const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
 
       // Check if player exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
       
       // Check if pickup game exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!pickupGame) { return new errors.NotFoundError() }
 
       // Check if player is registered to pickup game
@@ -138,6 +154,7 @@ module.exports = {
       if (alreadyRegistered.length === 0) { return new errors.PickupGamePlayerNotRegisteredError() }
 
       // Check if pickup game has passed
+      /** 5. Players cannot be removed from pickup games that have already passed  */
       const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 

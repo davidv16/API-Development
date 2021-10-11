@@ -45,6 +45,8 @@ module.exports = {
       const player = await Player.findOne({ _id: ObjectId(id) })
 
       // Check if player exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if (!player) { return new errors.NotFoundError() }
 
       player.name = name

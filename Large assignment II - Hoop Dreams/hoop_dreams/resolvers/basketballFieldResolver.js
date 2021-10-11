@@ -13,6 +13,8 @@ module.exports = {
       // TODO: handle 404 error
       // done?
       // Check if basketballField exists
+      /** 6. A query or mutation which accepts an id as a field argument must check whether the
+    resource with the provided id exists */
       if(!basketballField) { return new erros.NotFounderror() }
 
       return basketballField
