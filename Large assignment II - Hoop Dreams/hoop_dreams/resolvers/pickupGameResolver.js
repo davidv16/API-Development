@@ -9,6 +9,7 @@ module.exports = {
 
       return PickupGame.find({ deleted: false })
         .then(pickupGames => {
+          console.log(pickupGames)
           return pickupGames
         }).catch(err => {
           console.error(err)
@@ -147,7 +148,7 @@ module.exports = {
       location: async (parent, args, { services }) => {
         const service = services.basketballFieldService
 
-        return await service.getBasketballField(parent.locationId)
+        return await service.getBasketballField(parent.basketballFieldId)
       },
       host: async (parent, args, { db }) => {
         const { Player } = db
