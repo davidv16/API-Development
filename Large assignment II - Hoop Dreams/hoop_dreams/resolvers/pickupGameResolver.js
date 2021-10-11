@@ -9,7 +9,6 @@ module.exports = {
 
       return PickupGame.find({ deleted: false })
         .then(pickupGames => {
-          console.log(pickupGames)
           return pickupGames
         }).catch(err => {
           console.error(err)
@@ -91,6 +90,7 @@ module.exports = {
 
       const player = await Player.findOne({ _id: playerId })
       const pickupGame = await PickupGame.findOne({ _id: pickupGameId })
+      console.log(player, pickupGame)
       
       // Check if player exists
       if (!player) { return new errors.NotFoundError() }
@@ -99,21 +99,28 @@ module.exports = {
       if (!pickupGame) { return new errors.NotFoundError() }
       
       // Check if pickup game capacity has exceded
-      const basketballField = await service.getBasketballField(PickupGame.locationId)
+      const basketballField = await service.getBasketballField(pickupGame.basketballFieldId)
       const pickupGames = await PickupGamePlayers.find({ pickupGameId })
       if (basketballField.capacity <= pickupGames.length) { return new errors.PickupGameExceedMaximumError() }
       
       // Check if pickup game has passed
-      const dateHasPassed = moment.duration(moment(start.value).diff(moment(new Date()))).asMinutes() < 0
+      const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
+      console.log(pickupGame.start, dateHasPassed)
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
       // Check if player is registered to pickup game
-      const alreadyRegistered = PickupGamePlayers.find({ playerId, pickupGameId })
-      if (alreadyRegistered) { return errors.PickupGamePlayerAlreadyRegisteredError() }
+      const alreadyRegistered = await PickupGamePlayers.find({ playerId, pickupGameId })
+      console.log(alreadyRegistered, alreadyRegistered.length)
+      if (alreadyRegistered.length !== 0) { return new errors.PickupGamePlayerAlreadyRegisteredError() }
 
       // TODO: check if player is registered to a game that overlaps
 
-      await PickupGamePlayers.insert({ playerId, pickupGameId })
+      const newPickupGamePlayers = PickupGamePlayers({
+        playerId,
+        pickupGameId
+      })
+
+      await newPickupGamePlayers.save()
 
       return pickupGame
     },
@@ -132,7 +139,8 @@ module.exports = {
       // TODO: Check if player is registered to pickup game
 
       // Check if pickup game has passed
-      const dateHasPassed = moment.duration(moment(start.value).diff(moment(new Date()))).asMinutes() < 0
+      const dateHasPassed = moment.duration(moment(pickupGame.start).diff(moment(new Date()))).asMinutes() < 0
+      console.log(pickupGame.start, dateHasPassed)
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
       return PickupGamePlayers.deleteOne({ playerId, pickupGameId })
