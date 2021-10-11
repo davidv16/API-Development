@@ -1,5 +1,5 @@
-const moment = require('moment')
 const { Types: { ObjectId } } = require('mongoose')
+const moment = require('moment')
 const errors = require('../errors')
 
 module.exports = {
@@ -14,8 +14,7 @@ module.exports = {
       const { PickupGame } = db
       const pickupGame = await PickupGame.findOne({ _id: ObjectId(id), deleted: false })
 
-      /** 6. A query or mutation which accepts an id as a field argument must check whether the
-      resource with the provided id exists */
+      // Check if pickup game exists
       if (!pickupGame) { return new errors.NotFoundError() }
 
       return pickupGame
@@ -175,19 +174,19 @@ module.exports = {
 
   types: {
     PickupGame: {
-      location: async (parent, args, { services }) => {
+      location: async ({ basketballFieldId }, args, { services }) => {
         const service = services.basketballFieldService
 
-        return await service.getBasketballField(parent.basketballFieldId)
+        return await service.getBasketballField(basketballFieldId)
       },
-      host: async (parent, args, { db }) => {
+      host: async ({ hostId }, args, { db }) => {
         const { Player } = db
 
-        return await Player.findOne({ _id: ObjectId(parent.hostId) })
+        return await Player.findOne({ _id: ObjectId(hostId) })
       },
-      registeredPlayers: async (parent, args, { db }) => {
+      registeredPlayers: async ({ id }, args, { db }) => {
         const { PickupGamePlayers, Player } = db
-        const playerIds = await PickupGamePlayers.find({ pickupGameId: parent.id }).then((d) => d.map(i => i.playerId))
+        const playerIds = await PickupGamePlayers.find({ pickupGameId: id }).then((d) => d.map(i => i.playerId))
 
         return await Player.find({ _id: { $in: playerIds } })
       }
