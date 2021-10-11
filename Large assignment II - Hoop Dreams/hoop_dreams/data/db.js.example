@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const pickupGameSchema = require('./schemas/pickupGameSchema')
-const pickupGamePlayers = require('./schemas/pickupGamePlayers')
+const pickupGamePlayersSchema = require('./schemas/pickupGamePlayersSchema')
 const playerSchema = require('./schemas/playerSchema')
 
 const connectionString = 'mongodb+srv://<user>:<pass>@<server>/hoop_dreams?retryWrites=true&w=majority'
