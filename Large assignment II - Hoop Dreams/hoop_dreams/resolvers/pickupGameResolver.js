@@ -70,12 +70,18 @@ module.exports = {
         hostId
       })
 
-      return newPickupGame.save()
-        .then(result => {
-          return { ...result._doc }
-        }).catch(err => {
-          console.error(err)
-        })
+      await newPickupGame.save()
+        .catch(err => { throw new Error(err) })
+
+      const newPickupGamePlayer = new PickupGamePlayers({
+        playerId: hostId,
+        pickupGameId: newPickupGame._id
+      })
+
+      await newPickupGamePlayer.save()
+        .catch(err => { throw new Error(err) })
+
+      return newPickupGame
     },
     removePickupGame: async (parent, { id }, { db }) => {
       const { PickupGame } = db
