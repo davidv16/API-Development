@@ -29,13 +29,13 @@ Player.insertMany([
     {
       start: new Date('2021-01-01'),
       end: new Date('2021-01-02'),
-      locationId: 'ef42039e-77bc-40a3-8121-c2a5424ebcdb',
+      basketballFieldId: 'ef42039e-77bc-40a3-8121-c2a5424ebcdb',
       hostId: players[0]._id.toString()
     },
     {
       start: new Date('2021-01-02'),
       end: new Date('2021-01-03'),
-      locationId: '1798a72b-b619-4150-b604-5de20fa3cc56',
+      basketballFieldId: '1798a72b-b619-4150-b604-5de20fa3cc56',
       hostId: players[1]._id.toString()
     }
   ], (err, games) => {
