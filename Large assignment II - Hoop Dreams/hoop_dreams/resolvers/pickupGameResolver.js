@@ -54,10 +54,10 @@ module.exports = {
 
       // Check if new game overlaps with another game on selected field
       const overlappedGames = pickupGames.filter((game) => {
-        return game.start <= new Date(start.value) && new Date(start.value) <= game.end
-          || game.start <= new Date(end.value) && new Date(end.value) <= game.end
-          || new Date(start.value) <= game.start && game.start <= new Date(end.value)
-          || new Date(start.value) <= game.end && game.end <= new Date(end.value)
+        return (game.start <= new Date(start.value) && new Date(start.value) <= game.end) ||
+          (game.start <= new Date(end.value) && new Date(end.value) <= game.end) ||
+          (new Date(start.value) <= game.start && game.start <= new Date(end.value)) ||
+          (new Date(start.value) <= game.end && game.end <= new Date(end.value))
       })
       if (overlappedGames.length > 0) { return new errors.PickupGameOverlapError() }
 
@@ -129,10 +129,10 @@ module.exports = {
       const playerPickupGameIds = await PickupGamePlayers.find({ playerId }).then((d) => d.map((i) => i.pickupGameId))
       const playerPickupGames = await PickupGame.find({ _id: { $in: playerPickupGameIds } })
       const overlappedGames = playerPickupGames.filter((game) => {
-        return game.start <= new Date(pickupGame.start) && new Date(pickupGame.start) <= game.end
-          || game.start <= new Date(pickupGame.end) && new Date(pickupGame.end) <= game.end
-          || new Date(pickupGame.start) <= game.start && game.start <= new Date(pickupGame.end)
-          || new Date(pickupGame.start) <= game.end && game.end <= new Date(pickupGame.end)
+        return (game.start <= new Date(pickupGame.start) && new Date(pickupGame.start) <= game.end) ||
+          (game.start <= new Date(pickupGame.end) && new Date(pickupGame.end) <= game.end) ||
+          (new Date(pickupGame.start) <= game.start && game.start <= new Date(pickupGame.end)) ||
+          (new Date(pickupGame.start) <= game.end && game.end <= new Date(pickupGame.end))
       })
       if (overlappedGames.length > 0) { return new errors.PickupGameOverlapError() }
 
