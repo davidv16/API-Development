@@ -20,7 +20,7 @@ module.exports = {
       pickupGames: async (parent, args, { db }) => {
         const { PickupGame } = db
 
-        return await PickupGame.find({ locationId: parent.id })
+        return await PickupGame.find({ basketballFieldId: parent.id })
       }
     }
   }
