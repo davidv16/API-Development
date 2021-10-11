@@ -42,12 +42,15 @@ module.exports = {
     updatePlayer: async (parent, { id, name }, { db }) => {
       const { Player } = db
 
-      return Player.findByIdAndUpdate(ObjectId(id), { name })
-        .then(result => {
-          return { ...result._doc }
-        }).catch(err => {
-          console.error(err)
-        })
+      const player = await Player.findOne({ _id: ObjectId(id) })
+
+      // Check if player exists
+      if (!player) { return new errors.NotFoundError() }
+
+      player.name = name
+      player.save()
+
+      return player
     },
     removePlayer: async (parent, { id }, { db }) => {
       const { Player } = db
