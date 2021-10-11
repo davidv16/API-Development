@@ -5,6 +5,12 @@ mutation createPlayer {
   }  
 }
 
+mutation updatePlayer {
+  updatePlayer(id: "61639a8d5e4622cd4b1b52e1", name: "Blergh!") {
+    name
+  }
+}
+
 query allPlayers {
 	allPlayers{
     id
@@ -18,7 +24,7 @@ query allPlayers {
 }
 
 query player {
-  player(id: "6163357d9f758a323b5802db"){
+  player(id: "61639a8d5e4622cd4b1b52e1"){
     id
   	name
     playedGames{
@@ -26,8 +32,11 @@ query player {
     	start
       end
     }
-    
   }
+}
+
+mutation removePlayer {
+  removePlayer(id: "61639a8d5e4622cd4b1b52e1")
 }
 
 query allPickupGames {
@@ -72,10 +81,34 @@ query pickupGame {
 
 mutation createPickupGame {
 	createPickupGame(input: {
+    start: "2021-11-01 10:00",
+  	end : "2021-11-01 11:00"
+    basketballFieldId: "ef42039e-77bc-40a3-8121-c2a5424ebcdb",
+    hostId: "6163988339b773a346b79989"
+  }) {
+    start
+    end
+  }  
+}
+
+mutation createPickupGameWithInvalidHost {
+	createPickupGame(input: {
+    start: "2021-01-01 10:00",
+  	end : "2021-01-01 11:00"
+    basketballFieldId: "ef42039e-77bc-40a3-8121-c2a5424ebcdb",
+    hostId: "61624ac5ec6e41d7db1efa70"
+  }) {
+    start
+    end
+  }  
+}
+
+mutation createPickupGameOnClosedField {
+	createPickupGame(input: {
     start: "fös, 1. jan 2021 kl. 0:00",
   	end : "fös, 1. jan 2021 kl. 0:00"
-    basketballFieldId: "ef42039e-77bc-40a3-8121-c2a5424ebcdb",
-    hostId: "6163357d9f758a323b5802dc"
+    basketballFieldId: "94ddb8d8-8324-4a65-8f9f-06d6146169f8",
+    hostId: "6163357e9f758a323b5802e6"
   }) {
     start
     end
@@ -98,6 +131,5 @@ query getAllBasketBallFields {
     }
     status
   }
-
 }
 
