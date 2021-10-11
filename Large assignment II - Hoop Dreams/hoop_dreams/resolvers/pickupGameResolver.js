@@ -1,9 +1,10 @@
 const { ObjectId } = require('mongodb')
-const { PickupGame } = require('../data/db')
 
 module.exports = {
   queries: {
     allPickupGames: (parent, args, { db }) => {
+      const { PickupGame } = db
+
       return PickupGame.find()
         .then(pickupGames => {
           return pickupGames
@@ -12,7 +13,9 @@ module.exports = {
         })
     },
     pickupGame: (parent, { id }, { db }) => {
-      return PickupGame.findOne(ObjectId(id))
+      const { PickupGame } = db
+
+      return PickupGame.findOne({ _id: ObjectId(id) })
         .then(pickupGame => {
           return pickupGame
         }).catch(err => {
@@ -22,14 +25,17 @@ module.exports = {
   },
 
   mutations: {
-    createPickupGame: (parent, { input }) => {
+    createPickupGame: (parent, { input }, { db }) => {
+      const { pickupGame } = db
       const { start, end, basketballFieldId, hostId } = input
+
       const newPickupGame = new PickupGame({
         start,
         end,
         basketballFieldId,
         hostId
       })
+
       return newPickupGame.save()
         .then(result => {
           return { ...result._doc }
@@ -37,16 +43,31 @@ module.exports = {
           console.error(err)
         })
     },
-    removePickupGame: (parent, { id }) => {
-      return PickupGame.findByIdAndRemove(ObjectId(id))
+    removePickupGame: (parent, { id }, { db }) => {
+      const { PickupGame } = db
+
+      return PickupGame.findByIdAndRemove({ _id: ObjectId(id) })
         .then(result => {
           return result
         }).catch(err => {
           console.error(err)
         })
     },
-    addPlayerToPickupGame: () => {},
-    removePlayerFromPickupGame: () => {}
+    addPlayerToPickupGame: (parent, { playerId, pickupGameId }, { db }) => {
+      const { PickupGame, PickupGamePlayers, Player } = db
+
+      // TODO: check if player exists
+      // TODO: check if pickup game exists
+      // TODO: check if pickup game capacity has exceded
+      // TODO: check if pickup game has elapsed
+    },
+    removePlayerFromPickupGame: (parent, { playerId, pickupGameId }, { db }) => {
+      const { PickupGame, PickupGamePlayers, Player } = db
+
+      // TODO: check if player exists
+      // TODO: check if pickup game exists
+      // TODO: check if pickup game has elapsed
+    }
   },
 
   types: {
