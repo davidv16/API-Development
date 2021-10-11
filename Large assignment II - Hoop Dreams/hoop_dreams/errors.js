@@ -5,6 +5,14 @@ class PickupGameExceedMaximumError extends ApolloError {
     super(null, null, message)
     this.name = 'PickupGameExceedMaximumError'
     this.code = 409
+  }  
+}  
+
+class PickupGamePlayerAlreadyRegisteredError extends ApolloError {
+  constructor (message = 'Player is already registered to this pickup game ') {
+    super(null, null, message)
+    this.name = 'PickupGameAlreadyPassedError'
+    this.code = 409
   }
 }
 
@@ -13,16 +21,16 @@ class BasketballFieldClosedError extends ApolloError {
     super(null, null, message)
     this.name = 'BasketballFieldClosedError'
     this.code = 400
-  }
-}
+  }  
+}  
 
 class PickupGameOverlapError extends ApolloError {
   constructor (message = 'Pickup games cannot overlap') {
     super(null, null, message)
     this.name = 'PickupGameOverlapError'
     this.code = 400
-  }
-}
+  }  
+}  
 
 class PickupGameAlreadyPassedError extends ApolloError {
   constructor (message = 'Pickup game has already passed') {
@@ -50,6 +58,7 @@ class NotFoundError extends ApolloError {
 
 module.exports = {
   PickupGameExceedMaximumError,
+  PickupGamePlayerAlreadyRegisteredError,
   BasketballFieldClosedError,
   PickupGameOverlapError,
   PickupGameAlreadyPassedError,

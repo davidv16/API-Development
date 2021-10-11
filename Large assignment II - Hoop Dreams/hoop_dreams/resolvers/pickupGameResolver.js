@@ -106,7 +106,10 @@ module.exports = {
       const dateHasPassed = moment.duration(moment(start.value).diff(moment(new Date()))).asMinutes() < 0
       if (dateHasPassed) { return new errors.PickupGameAlreadyPassedError() }
 
-      // TODO: Check if player is registered to pickup game
+      // Check if player is registered to pickup game
+      const alreadyRegistered = PickupGamePlayers.find({ playerId, pickupGameId })
+      if (alreadyRegistered) { return errors.PickupGamePlayerAlreadyRegisteredError() }
+
       // TODO: check if player is registered to a game that overlaps
 
       await PickupGamePlayers.insert({ playerId, pickupGameId })
