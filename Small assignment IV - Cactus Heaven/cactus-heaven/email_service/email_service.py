@@ -18,9 +18,9 @@ channel.queue_bind(exchange=exchange_name, queue=email_queue_name, routing_key=c
 
 def send_simple_message(to, subject, body):
     return requests.post(
-        "https://api.mailgun.net/v3/<add-your-domain-here>/messages",
-        auth=("api", "<add-your-api-private-key-here>"),
-        data={"from": "Mailgun Sandbox <postmaster@<add-your-domain-here>>",
+        "https://api.mailgun.net/v3/sandboxcf1a5ac6a0774e37887f841e0530ff46.mailgun.org/messages",
+        auth=("api", "459eb7a0b2fd4b6b1bbeb871cc9fb317-2ac825a1-945f0d74"),
+        data={"from": "Mailgun Sandbox <postmaster@sandboxcf1a5ac6a0774e37887f841e0530ff46.mailgun.org>",
               "to": to,
               "subject": subject,
               "html": body})
@@ -30,7 +30,7 @@ def send_order_email(ch, method, properties, data):
     email = parsed_msg['email']
     items = parsed_msg['items']
     items_html = ''.join([ '<tr><td>%s</td><td>%d</td><td>%d</td><td>%d</td></tr>' % (item['description'], item['unitPrice'], item['quantity'], int(item['quantity']) * int(item['unitPrice'])) for item in items ])
-    representation = email_template % items_html
+    representation = email_template % items_html 
     send_simple_message(parsed_msg['email'], 'Successful order!', representation)
 
 channel.basic_consume(send_order_email,
