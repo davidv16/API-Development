@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace JustTradeIt.Software.API.Models.Entities
 {
     public class User
     {
+        [Key]
         public int Id { get; set; }
         public string PublicIdentifier { get; set; }
         public string FullName { get; set; }
@@ -12,9 +14,10 @@ namespace JustTradeIt.Software.API.Models.Entities
         public string HashedPassword { get; set; }
 
         //Navigation Properties
-        public IEnumerable<Item> Items { get; set; }
-        public IEnumerable<TradeItem> TradeItems { get; set; }
-        public IEnumerable<Trade> Trades { get; set; }
+        public ICollection<Item> Items { get; set; }
+        public ICollection<TradeItem> TradeItems { get; set; }
+        public ICollection<Trade> Receivers { get; set; }
+        public ICollection<Trade> Senders { get; set; }
 
     }
 }

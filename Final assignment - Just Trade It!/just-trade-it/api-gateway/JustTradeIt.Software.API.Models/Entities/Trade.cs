@@ -16,7 +16,7 @@ namespace JustTradeIt.Software.API.Models.Entities
         //Navigation Properties
         public User Receiver { get; set; }
         public User Sender { get; set; }
-        public IEnumerable<TradeItem> TradeItems { get; set; }
+        public ICollection<TradeItem> TradeItems { get; set; }
 
     }
 }

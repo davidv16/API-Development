@@ -9,6 +9,6 @@ namespace JustTradeIt.Software.API.Models.Entities
         public string Description { get; set; }
 
         //Navigation Properties
-        public IEnumerable<Item> Items { get; set; }
+        public ICollection<Item> Items { get; set; }
     }
 }

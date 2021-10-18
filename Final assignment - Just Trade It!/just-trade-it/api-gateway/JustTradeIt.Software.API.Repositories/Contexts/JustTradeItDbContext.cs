@@ -13,6 +13,21 @@ namespace JustTradeIt.Software.API.Repositories.Contexts
             //Manual configuration of relations (many to many)
             modelBuilder.Entity<TradeItem>()
                 .HasKey(x => new { x.TradeId, x.UserId, x.ItemId });
+            
+
+            
+            modelBuilder.Entity<Trade>( act => {
+                act.HasOne(field => field.Receiver)
+                    .WithMany(fk => fk.Receivers)
+                    .HasForeignKey(fk => fk.ReceiverId);
+                    //.HasConstraintName("Receiver_FK");
+
+                act.HasOne(field => field.Sender)
+                    .WithMany(fk => fk.Senders)
+                    .HasForeignKey(fk => fk.SenderId);
+                    //.HasConstraintName("Sender_FK");
+
+            });
         }
 
         public DbSet<Item> Items { get; set; }
@@ -25,3 +40,4 @@ namespace JustTradeIt.Software.API.Repositories.Contexts
 
     }
 }
+

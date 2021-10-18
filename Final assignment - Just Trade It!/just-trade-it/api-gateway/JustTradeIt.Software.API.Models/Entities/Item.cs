@@ -15,7 +15,7 @@ namespace JustTradeIt.Software.API.Models.Entities
         //Navigation Properties
         public ItemCondition ItemCondition { get; set; }
         public User Owner { get; set; }
-        public IEnumerable<ItemImage> ItemImages { get; set; }
-        public IEnumerable<TradeItem> TradeItems { get; set; }
+        public ICollection<ItemImage> ItemImages { get; set; }
+        public ICollection<TradeItem> TradeItems { get; set; }
     }
 }
