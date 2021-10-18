@@ -9,7 +9,7 @@
     "seed": "node ./data/seed.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "einarsig16 & davidv16",
   "license": "ISC",
   "devDependencies": {
     "cli-progress": "^2.1.0",
