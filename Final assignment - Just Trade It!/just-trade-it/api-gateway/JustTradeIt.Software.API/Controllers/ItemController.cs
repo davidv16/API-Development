@@ -6,6 +6,32 @@ namespace JustTradeIt.Software.API.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        // TODO: Setup routes
+        [HttpGet]
+        [Route("")]
+        public IActionResult GetAllAvailableItems()
+        {
+            return Ok();
+        }
+
+
+        [HttpGet]
+        [Route("{identifier: string}")]
+        public IActionResult GetItemById()
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("")]
+        public IActionResult CreateItem()
+        {
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("{identifier: string}")]
+        public IActionResult DeleteItem()
+        {
+            return Ok();
+        }
     }
 }

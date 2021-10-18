@@ -1,0 +1,906 @@
+{
+	"info": {
+		"_postman_id": "70267938-2356-4e77-bd5c-e5f556876c18",
+		"name": "Just Trade It",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Register 'John' as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@wallstreet.com\",\r\n    \"fullName\": \"John Wall\",\r\n    \"password\": \"i.am.wolf\",\r\n    \"passwordConfirmation\": \"i.am.wolf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register 'Lisa' as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"lisa@wallstreet.com\",\r\n    \"fullName\": \"Lisa Margaret\",\r\n    \"password\": \"i.am.bear\",\r\n    \"passwordConfirmation\": \"i.am.bear\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register 'Montgomery' as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"montgomery@wallstreet.com\",\r\n    \"fullName\": \"Montgomery Burns\",\r\n    \"password\": \"i.am.billion\",\r\n    \"passwordConfirmation\": \"i.am.billion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login 'John' as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@wallstreet.com\",\r\n    \"password\": \"i.am.wolf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login 'Lisa' as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"lisa@wallstreet.com\",\r\n    \"password\": \"i.am.bear\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login 'Montgomery' as a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"montgomery@wallstreet.com\",\r\n    \"password\": \"i.am.billion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", \"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/account/logout",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get profile information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/account/profile",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update 'John' profile information",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullName",
+									"value": "John Wallstreet",
+									"type": "text"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": "/C:/Users/Arnar/Desktop/220px-The_Simpsons-Jeff_Albertson.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/profile",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update 'Lisa' profile information",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullName",
+									"value": "Lisa Helena",
+									"type": "text"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": "/C:/Users/Arnar/Desktop/Patty_Bouvier1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/profile",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update 'Montgomery' profile information",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullName",
+									"value": "Montgomery Brown",
+									"type": "text"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": "/C:/Users/Arnar/Desktop/Mr_Burns.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/account/profile",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"account",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trades",
+			"item": [
+				{
+					"name": "Get all completed trades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/trades?onlyCompleted=true&onlyIncludeActive=true",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades"
+							],
+							"query": [
+								{
+									"key": "onlyCompleted",
+									"value": "true"
+								},
+								{
+									"key": "onlyIncludeActive",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all active trade requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/trades?onlyCompleted=false&onlyIncludeActive=true",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades"
+							],
+							"query": [
+								{
+									"key": "onlyCompleted",
+									"value": "false"
+								},
+								{
+									"key": "onlyIncludeActive",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all trade requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/trades?onlyCompleted=false&onlyIncludeActive=false",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades"
+							],
+							"query": [
+								{
+									"key": "onlyCompleted",
+									"value": "false"
+								},
+								{
+									"key": "onlyIncludeActive",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get trade by identifier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/trades/98fbe152-2ac4-4f77-86bc-c342eb54bead",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades",
+								"98fbe152-2ac4-4f77-86bc-c342eb54bead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create trade request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"trade_identifier_location_url\", pm.response.headers.get(\"Location\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"receiverIdentifier\": \"762e6d22-8b97-45b5-9a62-725f9b2e4aa4\",\r\n    \"itemsInTrade\": [\r\n        {\r\n            \"identifier\": \"5110b1cf-94c0-480b-a269-79b316a65ba3\"\r\n        },\r\n        {\r\n            \"identifier\": \"6f78219b-a9a3-47ee-a39c-d40da1bc4f97\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/trades",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept trade request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"trade_identifier_location_url\", pm.response.headers.get(\"Location\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Accepted\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/trades/98fbe152-2ac4-4f77-86bc-c342eb54bead",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades",
+								"98fbe152-2ac4-4f77-86bc-c342eb54bead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Decline trade request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"trade_identifier_location_url\", pm.response.headers.get(\"Location\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Declined\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/trades/e53ee53d-3a0e-41eb-813e-de1f903f7aad",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades",
+								"e53ee53d-3a0e-41eb-813e-de1f903f7aad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel trade request Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"trade_identifier_location_url\", pm.response.headers.get(\"Location\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Cancelled\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/trades/e53ee53d-3a0e-41eb-813e-de1f903f7aad",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"trades",
+								"e53ee53d-3a0e-41eb-813e-de1f903f7aad"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Get items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/items?pageNumber=1&pageSize=50&ascendingSortOrder=true",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"items"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "50"
+								},
+								{
+									"key": "ascendingSortOrder",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get item by identifier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{item_identifier_location_url}}",
+							"host": [
+								"{{item_identifier_location_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add used basketball shoes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"item_identifier_location_url\", pm.response.headers.get(\"Location\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Giannis Antetokounmpo '19 48-POINT GAME USED AND SIGNED SNEAKERS\",\r\n    \"shortDescription\": \"While wearing these exact Nike Zoom Freak 1 shoes, Milwaukee Bucks superstar Giannis Antetokounmpo dropped 48 points, 14 rebounds and 4 assists in a 2019 home game against the Mavericks - his 2nd highest scoring output of the 2019-20 season and 5th highest scoring of his career. “The Greek Freak” cemented his legacy with an iconic 2021 NBA playoffs, leading the Bucks to their first NBA championship since 1971 and being named Finals MVP. Giannis has proven to be one of the most investable and collectible athletes in history, with his unique combination of star power, charisma, and international appeal.\",\r\n    \"description\": \"While wearing these exact Nike Zoom Freak 1 shoes, Milwaukee Bucks superstar Giannis Antetokounmpo dropped 48 points, 14 rebounds and 4 assists in a 2019 home game against the Mavericks - his 2nd highest scoring output of the 2019-20 season and 5th highest scoring of his career. “The Greek Freak” cemented his legacy with an iconic 2021 NBA playoffs, leading the Bucks to their first NBA championship since 1971 and being named Finals MVP. Giannis has proven to be one of the most investable and collectible athletes in history, with his unique combination of star power, charisma, and international appeal. Giannis Antetokounmpo, nicknamed “The Greek Freak” is one of the NBA’s most electrifying, charismatic, and likable young stars. Highly athletic and versatile, Antetokounmpo is often recognized as one of the best all-around players in the NBA, and many analysts have declared him “position-less” and possessing a unique combination of size, speed, ball handling skills and defensive prowess.  Drafted 15th overall by the Milwaukee Bucks in the 2011 NBA Draft, Giannis has been nothing short of remarkable in his brief career. His accolades include: 2× NBA Most Valuable Player, NBA Defensive Player of the Year, 4× NBA All-Star, NBA Most Improved Player, 4× All-NBA Selection, All-NBA First Team, 3× All-Defensive Selection, NBA All-Defensive First Team. Hailing from Athens, Greece, Giannis has captivated international fanbases and brought a great deal of excitement to the league.  In 2021, Antetokounmpo helped lead the Bucks to their first NBA championship since 1971 and was named Finals MVP.\",\r\n    \"conditionCode\": \"USED\",\r\n    \"itemImages\": [\r\n        \"https://collectable-production-uploads-bucket.s3.amazonaws.com/97ec544e-6886-4d40-a525-9b4ab8042f6f\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/items/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Tom Brady tradeable card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"item_identifier_location_url\", pm.response.headers.get(\"Location\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Tom Brady '19 PANINI FLAWLESS VETERAN\",\r\n    \"shortDescription\": \"A unique offering containing the entirety of the 2019 Tom Brady Brand Logo Booklets, Brady’s final season in New England. The '19 Panini Flawless Veteran Brand Logo Booklets feature ultra low print runs, jersey patches and autographs - making them highly investable.  The jersey patches represent the last game worn Tom Brady patches from his dominant and historic reign as a Patriot. Numbered to 2, this offering represents both of the cards ever produced. Collectable accepted an offer to acquire this asset for $70,000 - a 42.33% premium over IPO price. The asset will be retired from the Collectable platform.\",\r\n    \"description\": \"A unique offering containing the entirety of the 2019 Tom Brady Brand Logo Booklets, Brady’s final season in New England. The '19 Panini Flawless Veteran Brand Logo Booklets feature ultra low print runs, jersey patches and autographs - making them highly investable.  The jersey patches represent the last game worn Tom Brady patches from his dominant and historic reign as a Patriot. Numbered to 2, this offering represents both of the cards ever produced. Collectable accepted an offer to acquire this asset for $70,000 - a 42.33% premium over IPO price. The asset will be retired from the Collectable platform. Brady was drafted 199th overall by the Patriots in the sixth round of the 2000 NFL Draft out of the University of Michigan. Despite being unheralded, Brady went on to become one of the most legendary quarterbacks in NFL history. Brady’s immense achievements include: 7x Super Bowl champion, 5x Super Bowl MVP, 3x NFL MVP, and 14x Pro Bowl selection. Brady was selected to the NFL 2000’s All-Decade Team, the NFL 2010’s All-Decade Team, and a unanimous selection to the NFL 100th Anniversary Team. In addition, Brady was named Sports Illustrated Sportsman of the Year in 2005. After 20 seasons in New England, Brady signed on with the Tampa Bay Buccaneers for the 2020 season and is now in his second season with them after leading them to a Super Bowl Championship in 2020\",\r\n    \"conditionCode\": \"MINT\",\r\n    \"itemImages\": [\r\n        \"https://collectable-production-uploads-bucket.s3.amazonaws.com/fe4e0a14-fca7-445a-93c5-2d2c729534b4\",\r\n        \"https://collectable-production-uploads-bucket.s3.amazonaws.com/93a3b873-d9f2-4b19-9642-e96232570fa6\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/items/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Giannis Antetokounmpo '19 48-POINT GAME USED AND SIGNED SNEAKERS\",\r\n    \"shortDescription\": \"While wearing these exact Nike Zoom Freak 1 shoes, Milwaukee Bucks superstar Giannis Antetokounmpo dropped 48 points, 14 rebounds and 4 assists in a 2019 home game against the Mavericks - his 2nd highest scoring output of the 2019-20 season and 5th highest scoring of his career. “The Greek Freak” cemented his legacy with an iconic 2021 NBA playoffs, leading the Bucks to their first NBA championship since 1971 and being named Finals MVP. Giannis has proven to be one of the most investable and collectible athletes in history, with his unique combination of star power, charisma, and international appeal.\",\r\n    \"description\": \"While wearing these exact Nike Zoom Freak 1 shoes, Milwaukee Bucks superstar Giannis Antetokounmpo dropped 48 points, 14 rebounds and 4 assists in a 2019 home game against the Mavericks - his 2nd highest scoring output of the 2019-20 season and 5th highest scoring of his career. “The Greek Freak” cemented his legacy with an iconic 2021 NBA playoffs, leading the Bucks to their first NBA championship since 1971 and being named Finals MVP. Giannis has proven to be one of the most investable and collectible athletes in history, with his unique combination of star power, charisma, and international appeal. Giannis Antetokounmpo, nicknamed “The Greek Freak” is one of the NBA’s most electrifying, charismatic, and likable young stars. Highly athletic and versatile, Antetokounmpo is often recognized as one of the best all-around players in the NBA, and many analysts have declared him “position-less” and possessing a unique combination of size, speed, ball handling skills and defensive prowess.  Drafted 15th overall by the Milwaukee Bucks in the 2011 NBA Draft, Giannis has been nothing short of remarkable in his brief career. His accolades include: 2× NBA Most Valuable Player, NBA Defensive Player of the Year, 4× NBA All-Star, NBA Most Improved Player, 4× All-NBA Selection, All-NBA First Team, 3× All-Defensive Selection, NBA All-Defensive First Team. Hailing from Athens, Greece, Giannis has captivated international fanbases and brought a great deal of excitement to the league.  In 2021, Antetokounmpo helped lead the Bucks to their first NBA championship since 1971 and was named Finals MVP.\",\r\n    \"conditionCode\": \"USED\",\r\n    \"itemImages\": [\r\n        \"https://collectable-production-uploads-bucket.s3.amazonaws.com/97ec544e-6886-4d40-a525-9b4ab8042f6f\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{item_identifier_location_url}}",
+							"host": [
+								"{{item_identifier_location_url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get user information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/users/762e6d22-8b97-45b5-9a62-725f9b2e4aa4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"users",
+								"762e6d22-8b97-45b5-9a62-725f9b2e4aa4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user trades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/users/762e6d22-8b97-45b5-9a62-725f9b2e4aa4/trades",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"users",
+								"762e6d22-8b97-45b5-9a62-725f9b2e4aa4",
+								"trades"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

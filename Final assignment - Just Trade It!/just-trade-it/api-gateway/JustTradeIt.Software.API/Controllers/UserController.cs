@@ -8,6 +8,19 @@ namespace JustTradeIt.Software.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // TODO: Setup routes
+        [HttpGet]
+        [Route("{identifier: string}")]
+        public IActionResult GetUserProfileInfo()
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{identifier: string}/trades")]
+        public IActionResult GetAllSuccessfulTrades()
+        {
+            return Ok();
+        }
+
     }
 }
