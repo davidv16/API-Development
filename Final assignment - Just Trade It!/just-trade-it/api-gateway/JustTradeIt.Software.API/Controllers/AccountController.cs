@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using JustTradeIt.Software.API.Models.InputModels;
+using JustTradeIt.Software.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,13 @@ namespace JustTradeIt.Software.API.Controllers
     [Route("api/account")]
     public class AccountController : ControllerBase
     {
+        private readonly IAccountService _accountService;
+
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
@@ -27,7 +35,8 @@ namespace JustTradeIt.Software.API.Controllers
             //TODO: implement Signs the user in by checking the credentials
             //provided and issuing a JWT token in return
 
-            //TODO: call authentication service
+            var user = _accountService.AuthenticateUser(login);
+            if (user == null) { return Unauthorized(); }
             //TODO: Return valid JWT token
             return Ok();
         }
@@ -41,6 +50,9 @@ namespace JustTradeIt.Software.API.Controllers
             //token using the id found within the claim
 
             //TODO: Retreive token id from claim and blacklist token
+
+            int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
+            _accountService.Logout(tokenId);
             return NoContent();
         }
 

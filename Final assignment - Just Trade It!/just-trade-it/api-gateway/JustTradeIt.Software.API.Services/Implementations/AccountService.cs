@@ -22,11 +22,13 @@ namespace JustTradeIt.Software.API.Services.Implementations
             return _userRepository.AuthenticateUser(loginInputModel);
         }
 
+        //TODO: implement
         public UserDto CreateUser(RegisterInputModel inputModel)
         {
             throw new System.NotImplementedException();
         }
 
+        //TODO: implement
         public UserDto GetProfileInformation(string name)
         {
             throw new System.NotImplementedException();
@@ -37,6 +39,7 @@ namespace JustTradeIt.Software.API.Services.Implementations
             _tokenRepository.VoidToken(tokenId);
         }
 
+        //TODO: implement
         public Task UpdateProfile(string email, ProfileInputModel profile)
         {
             throw new System.NotImplementedException();
