@@ -1,8 +1,10 @@
+using JustTradeIt.Software.API.Middlewares;
 using JustTradeIt.Software.API.Repositories.Contexts;
 using JustTradeIt.Software.API.Repositories.Implementations;
 using JustTradeIt.Software.API.Repositories.Interfaces;
 using JustTradeIt.Software.API.Services.Implementations;
 using JustTradeIt.Software.API.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,12 @@ namespace JustTradeIt.Software.API
             {
                 options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"), b => b.MigrationsAssembly("JustTradeIt.Software.API"));
             });
+
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtTokenAuthentication(Configuration);
 
             // repository transients
             services.AddTransient<IItemRepository, ItemRepository>();

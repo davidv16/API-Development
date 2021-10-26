@@ -12,10 +12,12 @@ namespace JustTradeIt.Software.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ITokenService tokenService)
         {
             _accountService = accountService;
+            _tokenService = tokenService;
         }
 
         [AllowAnonymous]
@@ -32,13 +34,10 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("login")]
         public IActionResult AuthenticateUser([FromBody] LoginInputModel login)
         {
-            //TODO: implement Signs the user in by checking the credentials
-            //provided and issuing a JWT token in return
-
             var user = _accountService.AuthenticateUser(login);
             if (user == null) { return Unauthorized(); }
-            //TODO: Return valid JWT token
-            return Ok();
+            var token = _tokenService.GenerateJwtToken(user);
+            return Ok(token);
         }
 
 

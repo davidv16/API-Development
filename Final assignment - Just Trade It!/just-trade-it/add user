@@ -1,0 +1,4 @@
+INSERT INTO "public"."Users"("Id", "Name", "Email", "HashedPassword")
+Values(1, 'John Doe', 'johndoe@agency.by', 'CBBrF79DInn3BvZfa6zVCtTmYdMtlv39SCb0aI3mkes=');
+INSERT INTO "public"."Users"("Id", "Name", "Email", "HashedPassword")
+Values(2, 'Jane Doe', 'janedoe@agency.be', 'CBBrF79DInn3BvZfa6zVCtTmYdMtlv39SCb0aI3mkes=');
