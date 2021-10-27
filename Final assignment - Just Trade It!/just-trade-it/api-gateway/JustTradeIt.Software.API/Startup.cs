@@ -45,12 +45,19 @@ namespace JustTradeIt.Software.API
             services.AddTransient<IUserRepository, UserRepository>();
 
             // service transients
+            var jwtConfig = Configuration.GetSection("JwtConfig");
+            services.AddTransient<ITokenService>((c) =>
+                new TokenService(
+                    jwtConfig.GetValue<string>("secret"),
+                    jwtConfig.GetValue<string>("expirationInMinutes"),
+                    jwtConfig.GetValue<string>("issuer"),
+                    jwtConfig.GetValue<string>("audience")
+                ));
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddTransient<IQueueService, QueueService>();
-            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ITradeService, TradeService>();
             services.AddTransient<IUserService, UserService>();
 
