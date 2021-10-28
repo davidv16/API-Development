@@ -48,10 +48,10 @@ namespace JustTradeIt.Software.API
             var jwtConfig = Configuration.GetSection("JwtConfig");
             services.AddTransient<ITokenService>((c) =>
                 new TokenService(
-                    jwtConfig.GetValue<string>("secret"),
-                    jwtConfig.GetValue<string>("expirationInMinutes"),
-                    jwtConfig.GetValue<string>("issuer"),
-                    jwtConfig.GetValue<string>("audience")
+                    jwtConfig.GetSection("secret").Value,
+                    jwtConfig.GetSection("expirationInMinutes").Value,
+                    jwtConfig.GetSection("issuer").Value,
+                    jwtConfig.GetSection("audience").Value
                 ));
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IImageService, ImageService>();

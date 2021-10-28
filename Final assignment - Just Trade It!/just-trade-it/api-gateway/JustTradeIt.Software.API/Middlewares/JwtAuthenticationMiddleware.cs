@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+//using System.Threading.Tasks;
 using JustTradeIt.Software.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,14 +13,14 @@ namespace JustTradeIt.Software.API.Middlewares
 {
     public static class JwtAuthenticationMiddleware
     {
-        public static AuthenticationBuilder AddJwtTokenAuthentication(this AuthenticationBuilder builder, IConfiguration config)
+        public static AuthenticationBuilder AddJwtTokenAuthentication(this AuthenticationBuilder builder,
+            IConfiguration config)
         {
             var jwtConfig = config.GetSection("JwtConfig");
-            var secret = jwtConfig.GetValue<string>("secret");
-            var issuer = jwtConfig.GetValue<string>("issuer");
-            var audience = jwtConfig.GetValue<string>("audience");
+            var secret = jwtConfig.GetSection("secret").Value;
+            var issuer = jwtConfig.GetSection("issuer").Value;
+            var audience = jwtConfig.GetSection("audience").Value;
             var key = Encoding.ASCII.GetBytes(secret);
-
             builder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, x =>
             {
                 x.SaveToken = true;
@@ -30,24 +31,23 @@ namespace JustTradeIt.Software.API.Middlewares
                     ValidateAudience = true,
                     ValidIssuer = issuer,
                     ValidAudience = audience,
-                    NameClaimType = "name" // User.Identity.Name
+                    NameClaimType = "name"
                 };
                 x.Events = new JwtBearerEvents
                 {
                     OnTokenValidated = async context =>
                     {
-                        var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenId").Value;
+                        var claim = context.Principal.Claims.FirstOrDefault(c => c.Type == "tokenId")?.Value;
                         int.TryParse(claim, out var tokenId);
-                        var tokenService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
+                        var accountService = context.HttpContext.RequestServices.GetService<IJwtTokenService>();
 
-                        if (tokenService.IsTokenBlacklisted(tokenId))
+                        if (accountService.IsTokenBlacklisted(tokenId))
                         {
                             context.Response.StatusCode = 401;
-                            await context.Response.WriteAsync("JWT token provided is invalid");
+                            await context.Response.WriteAsync("JWT token provided is invalid.");
                         }
                     }
                 };
-
             });
             return builder;
         }
