@@ -18,7 +18,7 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
         [HttpGet]
-        [Route("{identifier:string}")]
+        [Route("{identifier}")]
         public IActionResult GetItemByIdentifier(string identifier)
         {
             //TODO: implement Gets a detailed version of an item by identifier
@@ -35,7 +35,7 @@ namespace JustTradeIt.Software.API.Controllers
             return Ok();
         }
         [HttpDelete]
-        [Route("{identifier:string}")]
+        [Route("{identifier}")]
         public IActionResult RemoveItem(string identifier)
         {
             //TODO: Implement - Delete an item from the inventory of the
