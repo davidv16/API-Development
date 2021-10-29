@@ -28,7 +28,7 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
         [HttpGet]
-        [Route("{identifier: string}")]
+        [Route("{identifier:string}")]
         public IActionResult GetTradeByIdentifier()
         {
             //TODO: implement Get a detailed version of a trade request
@@ -36,7 +36,7 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
         [HttpPut]
-        [Route("{identifier: string}")]
+        [Route("{identifier:string}")]
         public IActionResult UpdateTradeRequest()
         {
             //TODO: implement Updates the status of a trade request. Only a

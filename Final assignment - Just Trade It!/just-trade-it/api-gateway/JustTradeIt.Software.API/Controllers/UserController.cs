@@ -10,7 +10,7 @@ namespace JustTradeIt.Software.API.Controllers
     {
         //TODO: implement Get a user profile Information
         [HttpGet]
-        [Route("{identifier: string}")]
+        [Route("{identifier:string}")]
         public IActionResult GetUserInformation()
         {
             return Ok();
@@ -18,7 +18,7 @@ namespace JustTradeIt.Software.API.Controllers
 
         //TODO: Get all successful trades associated with a user
         [HttpGet]
-        [Route("{identifier: string}/trades")]
+        [Route("{identifier:string}/trades")]
         public IActionResult GetUserTrades()
         {
             return Ok();
