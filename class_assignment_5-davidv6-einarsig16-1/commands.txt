@@ -1,0 +1,17 @@
+# 1. Start by pulling and running a Hello World container
+docker run hello-world
+
+# 5. Now build an image our of the custom Dockerfile calles <your-name>/donuts-web
+docker build -t einarsig16/donuts-web .
+
+# 6. Run a container which uses that image and maps internal port 5000 to external port 9000 and executed in detached mode
+docker run --name donuts-web -d -p 9000:5000 einarsig16/donuts-web
+
+# 7. Connect to the container in interactive mode and get shell access
+docker exec -it donuts-web /bin/bash
+
+# 9. Now use CURL to issue a GET request to http://localhost:9000/api/donuts
+curl http://localhost:9000/api/donuts
+
+# 10. Login to docker hub and upload image
+docker push einarsig16/donuts-web

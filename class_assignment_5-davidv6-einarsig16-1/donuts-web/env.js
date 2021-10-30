@@ -1,0 +1,5 @@
+const { DONUT_DBHOST, DONUT_DBNAME, DONUT_DBUSER, DONUT_DBPWD } = process.env;
+
+module.exports = {
+    db: { DONUT_DBHOST, DONUT_DBNAME, DONUT_DBUSER, DONUT_DBPWD }
+};
