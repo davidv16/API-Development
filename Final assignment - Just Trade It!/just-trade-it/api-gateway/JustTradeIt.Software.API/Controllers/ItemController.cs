@@ -18,8 +18,8 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
         [HttpGet]
-        [Route("{identifier: string}")]
-        public IActionResult GetItemByIdentifier()
+        [Route("{identifier}")]
+        public IActionResult GetItemByIdentifier(string identifier)
         {
             //TODO: implement Gets a detailed version of an item by identifier
             return Ok();
@@ -35,8 +35,8 @@ namespace JustTradeIt.Software.API.Controllers
             return Ok();
         }
         [HttpDelete]
-        [Route("{identifier: string}")]
-        public IActionResult RemoveItem()
+        [Route("{identifier}")]
+        public IActionResult RemoveItem(string identifier)
         {
             //TODO: Implement - Delete an item from the inventory of the
             //authenticated user. The item should only be soft deleted from the database.
