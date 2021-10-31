@@ -82,7 +82,12 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
 
         public void UpdateProfile(string email, string profileImageUrl, ProfileInputModel profile)
         {
-            throw new NotImplementedException();
+            var newProfile = _dbContext.Users.FirstOrDefault(n => n.Email == email);
+
+            newProfile.FullName = profile.FullName;
+            newProfile.ProfileImageUrl = profile.ProfileImage.ToString();
+
+            _dbContext.SaveChanges();
         }
 
         private string HashPassword(string password)

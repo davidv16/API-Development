@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JustTradeIt.Software.API.Models.InputModels;
 using JustTradeIt.Software.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -68,11 +69,12 @@ namespace JustTradeIt.Software.API.Controllers
 
         [HttpPut]
         [Route("profile")]
-        public IActionResult UpdateProfile()
+        public IActionResult UpdateProfile([FromBody] ProfileInputModel profile)
         {
             //TODO: implement - - Updates the profile information associated with
             // the authenticated user
-            return Ok();
+            _accountService.UpdateProfile(User.Identity.Name, profile);
+            return NoContent();
         }
 
 

@@ -38,10 +38,11 @@ namespace JustTradeIt.Software.API.Services.Implementations
             _tokenRepository.VoidToken(tokenId);
         }
 
-        //TODO: implement
+        //TODO: implement to Task
         public Task UpdateProfile(string email, ProfileInputModel profile)
         {
-            string profileImageUrl = "bleh";
+            //TODO: implement
+            string profileImageUrl = "/bleh/sdfsdf";
 
             _userRepository.UpdateProfile(email, profileImageUrl, profile);
             throw new NotImplementedException();

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace JustTradeIt.Software.API.Models.InputModels
 {
@@ -6,9 +7,7 @@ namespace JustTradeIt.Software.API.Models.InputModels
     {
         [MinLength(3)]
         public string FullName { get; set; }
-
-        // TODO: finish this
-        //public IFormFile ProfileImage { get; set; }
+        public IFormFile ProfileImage { get; set; }
 
     }
 }
