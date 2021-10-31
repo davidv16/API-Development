@@ -42,7 +42,32 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
 
         public UserDto CreateUser(RegisterInputModel inputModel)
         {
-            throw new NotImplementedException();
+
+            var user = _dbContext.Users.FirstOrDefault(u =>
+                u.Email == inputModel.Email);
+            if (!(user == null)) { return null; }
+
+            var nextId = _dbContext.Users.Max(table => table.Id) +1;
+            var newIdentifier = Guid.NewGuid().ToString();
+
+            _dbContext.Users.Add(new User{
+                Id = nextId,
+                PublicIdentifier = newIdentifier,
+                FullName = inputModel.FullName,
+                Email = inputModel.Email,
+                ProfileImageUrl = "/someurl/",
+                HashedPassword = HashPassword(inputModel.Password)
+            });
+            _dbContext.SaveChanges();
+
+            var token = _tokenRepository.CreateNewToken();
+
+            return new UserDto{
+                Identifier = newIdentifier,
+                FullName = inputModel.FullName,
+                Email = inputModel.Email,
+                TokenId = token.Id
+            };
         }
 
         public UserDto GetProfileInformation(string email)

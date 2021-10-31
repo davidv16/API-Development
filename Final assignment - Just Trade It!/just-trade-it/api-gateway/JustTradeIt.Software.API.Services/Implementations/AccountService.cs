@@ -3,6 +3,7 @@ using JustTradeIt.Software.API.Services.Interfaces;
 using JustTradeIt.Software.API.Models.InputModels;
 using JustTradeIt.Software.API.Models.Dtos;
 using JustTradeIt.Software.API.Repositories.Interfaces;
+using System;
 
 namespace JustTradeIt.Software.API.Services.Implementations
 {
@@ -22,16 +23,14 @@ namespace JustTradeIt.Software.API.Services.Implementations
             return _userRepository.AuthenticateUser(loginInputModel);
         }
 
-        //TODO: implement
         public UserDto CreateUser(RegisterInputModel inputModel)
         {
-            throw new System.NotImplementedException();
+            return _userRepository.CreateUser(inputModel);
         }
 
-        //TODO: implement
         public UserDto GetProfileInformation(string name)
         {
-            throw new System.NotImplementedException();
+            return _userRepository.GetProfileInformation(name);
         }
 
         public void Logout(int tokenId)
@@ -42,7 +41,10 @@ namespace JustTradeIt.Software.API.Services.Implementations
         //TODO: implement
         public Task UpdateProfile(string email, ProfileInputModel profile)
         {
-            throw new System.NotImplementedException();
+            string profileImageUrl = "bleh";
+
+            _userRepository.UpdateProfile(email, profileImageUrl, profile);
+            throw new NotImplementedException();
         }
     }
 }

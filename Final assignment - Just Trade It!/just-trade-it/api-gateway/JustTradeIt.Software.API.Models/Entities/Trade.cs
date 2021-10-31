@@ -10,6 +10,7 @@ namespace JustTradeIt.Software.API.Models.Entities
         public DateTime IssueDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public string TradeStatus { get; set; }
         public int ReceiverId { get; set; }
         public int SenderId { get; set; }
 

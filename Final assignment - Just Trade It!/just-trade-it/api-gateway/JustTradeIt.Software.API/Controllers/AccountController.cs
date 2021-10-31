@@ -23,10 +23,12 @@ namespace JustTradeIt.Software.API.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
-        public IActionResult CreateUser()
+        public IActionResult CreateUser([FromBody] RegisterInputModel user)
         {
-            //TODO: implement Registers a user within the application
-            return Ok();
+            if (!ModelState.IsValid) { return StatusCode(412, user); };
+            var id = _accountService.CreateUser(user);
+
+            return CreatedAtRoute("", new { id }, null);
         }
 
         [AllowAnonymous]

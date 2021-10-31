@@ -8,20 +8,22 @@ namespace JustTradeIt.Software.API.Services.Implementations
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITradeRepository _tradeRepository;
 
-        public UserService(IUserRepository userRepository, IJwtTokenService jwtTokenService)
+        public UserService(IUserRepository userRepository, ITradeRepository tradeRepository = null)
         {
             _userRepository = userRepository;
+            _tradeRepository = tradeRepository;
         }
 
         public UserDto GetUserInformation(string identifier)
         {
-            throw new System.NotImplementedException();
+            return _userRepository.GetUserInformation(identifier);
         }
 
         public IEnumerable<TradeDto> GetUserTrades(string userIdentifier)
         {
-            throw new System.NotImplementedException();
+            return _tradeRepository.GetUserTrades(userIdentifier);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace JustTradeIt.Software.API.Models.InputModels
         public string Password { get; set; }
         [Required]
         [MinLength(8)]
-        // TODO: check if password is equal
+        [Compare("Password")]
         public string PasswordConfirmation { get; set; }
     }
 }
