@@ -1,3 +1,4 @@
+using JustTradeIt.Software.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,13 +9,22 @@ namespace JustTradeIt.Software.API.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
+        private readonly IItemService _itemService;
+
+        public ItemController(IItemService itemService)
+        {
+            _itemService = itemService;
+        }
+
         [HttpGet]
         [Route("")]
-        public IActionResult GetItems()
+        public IActionResult GetItems([FromQuery] int pageNumber, [FromQuery] int pageSize, [FromQuery] bool ascendingSortOrder)
         {
             //TODO: implement Get all available items
             //The result is an envelope containing the results in pages.
-            return Ok();
+
+
+            return Ok(_itemService.GetItems(pageSize, pageNumber, ascendingSortOrder));
         }
 
         [HttpGet]
