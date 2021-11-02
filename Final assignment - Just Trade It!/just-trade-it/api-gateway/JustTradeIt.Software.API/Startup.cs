@@ -61,6 +61,8 @@ namespace JustTradeIt.Software.API
             services.AddTransient<ITradeService, TradeService>();
             services.AddTransient<IUserService, UserService>();
 
+            services.AddHttpContextAccessor();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
