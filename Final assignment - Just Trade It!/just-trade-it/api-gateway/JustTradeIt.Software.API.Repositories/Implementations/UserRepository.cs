@@ -7,6 +7,8 @@ using System.Text;
 using JustTradeIt.Software.API.Repositories.Contexts;
 using JustTradeIt.Software.API.Models.Entities;
 using System.Linq;
+using JustTradeIt.Software.API.Repositories.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace JustTradeIt.Software.API.Repositories.Implementations
 {
@@ -14,19 +16,21 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
     {
         private readonly JustTradeItDbContext _dbContext;
         private readonly ITokenRepository _tokenRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private string _salt = "00209b47-08d7-475d-a0fb-20abf0872ba0";
 
-        public UserRepository(JustTradeItDbContext dbContext, ITokenRepository tokenRepository)
+        public UserRepository(JustTradeItDbContext dbContext, ITokenRepository tokenRepository, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _tokenRepository = tokenRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public UserDto AuthenticateUser(LoginInputModel loginInputModel)
         {
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == loginInputModel.Email &&
-                u.HashedPassword == HashPassword(loginInputModel.Password));
+                u.HashedPassword == HashHelper.HashPassword(loginInputModel.Password, _salt));
             if (user == null) { return null; }
 
             var token = _tokenRepository.CreateNewToken();
@@ -45,7 +49,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
 
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.Email == inputModel.Email);
-            if (!(user == null)) { return null; }
+            if (!(user == null)) { throw new Exception("User already exists"); }
 
             var nextId = _dbContext.Users.Max(table => table.Id) +1;
             var newIdentifier = Guid.NewGuid().ToString();
@@ -55,8 +59,9 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                 PublicIdentifier = newIdentifier,
                 FullName = inputModel.FullName,
                 Email = inputModel.Email,
+                //TODO: figure out 
                 ProfileImageUrl = "/someurl/",
-                HashedPassword = HashPassword(inputModel.Password)
+                HashedPassword = HashHelper.HashPassword(inputModel.Password, _salt)
             });
             _dbContext.SaveChanges();
 
@@ -72,12 +77,42 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
 
         public UserDto GetProfileInformation(string email)
         {
-            throw new NotImplementedException();
+            var user = _dbContext.Users.FirstOrDefault(u =>
+                u.Email == email);
+            
+            int.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
+
+            var profileInfo = new UserDto
+            {
+                Identifier = user.PublicIdentifier,
+                FullName = user.FullName,
+                Email = user.Email,
+                ProfileImageUrl = user.ProfileImageUrl,
+                TokenId = tokenId
+            };
+
+            return profileInfo;
+            
         }
 
         public UserDto GetUserInformation(string userIdentifier)
         {
-            throw new NotImplementedException();
+            var user = _dbContext.Users.FirstOrDefault(u =>
+                u.PublicIdentifier == userIdentifier);
+            
+            int.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
+
+            var userInfo = new UserDto
+            {
+                Identifier = user.PublicIdentifier,
+                FullName = user.FullName,
+                Email = user.Email,
+                ProfileImageUrl = user.ProfileImageUrl,
+                TokenId = tokenId
+
+            };
+
+            return userInfo;
         }
 
         public void UpdateProfile(string email, string profileImageUrl, ProfileInputModel profile)
@@ -90,20 +125,5 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
             _dbContext.SaveChanges();
         }
 
-        private string HashPassword(string password)
-        {
-            return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: CreateSalt(),
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 1000,
-                numBytesRequested: 256 / 8
-            ));
-        }
-
-        private byte[] CreateSalt()
-        {
-            return Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(_salt)));
-        }
     }
 }

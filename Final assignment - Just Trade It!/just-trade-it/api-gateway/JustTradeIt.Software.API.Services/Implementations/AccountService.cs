@@ -4,6 +4,8 @@ using JustTradeIt.Software.API.Models.InputModels;
 using JustTradeIt.Software.API.Models.Dtos;
 using JustTradeIt.Software.API.Repositories.Interfaces;
 using System;
+using Amazon.Runtime.Internal.Transform;
+using Microsoft.AspNetCore.Http;
 
 namespace JustTradeIt.Software.API.Services.Implementations
 {

@@ -29,7 +29,6 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
             return token.Blacklisted;
         }
 
-        //signout
         public void VoidToken(int tokenId)
         {
             var token = _dbContext.JwtTokens.FirstOrDefault(t => t.Id == tokenId);

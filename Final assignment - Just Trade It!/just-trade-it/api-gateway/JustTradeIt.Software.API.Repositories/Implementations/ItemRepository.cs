@@ -7,21 +7,19 @@ using JustTradeIt.Software.API.Repositories.Contexts;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using JustTradeIt.Software.API.Models.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-   
-using System.Collections.Generic;
-//using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace JustTradeIt.Software.API.Repositories.Implementations
 {
     public class ItemRepository : IItemRepository
     {
         private readonly JustTradeItDbContext _dbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ItemRepository(JustTradeItDbContext dbContext)
+        public ItemRepository(JustTradeItDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public string AddNewItem(string email, ItemInputModel item)
@@ -45,7 +43,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
 
         public Envelope<ItemDto> GetAllItems(int pageSize, int pageNumber, bool ascendingSortOrder)
         {
-            var item = _dbContext.Items
+            var items = _dbContext.Items
                 .Select(n => new ItemDto
                 {
                     Identifier = n.PublicIdentifier,
@@ -59,16 +57,19 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         ProfileImageUrl = n.Owner.ProfileImageUrl
                     }
                 }).ToList();
-            //TODO: figure out how to return
-            throw new NotImplementedException();
+                
+            var envelope = new Envelope<ItemDto>(pageNumber, pageSize, items);
+            return envelope;
         }
 
         public ItemDetailsDto GetItemByIdentifier(string identifier)
         {
+            int.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
+            
             var item = _dbContext.Items
                 .Where(n => n.PublicIdentifier == identifier)
                 .Include(i => i.ItemImages)
-                .Include(u => u.Owner)
+                .Include(u => u.TradeItems)
                 .Select(n => new ItemDetailsDto
                 {
                     Identifier = n.PublicIdentifier,
@@ -78,9 +79,10 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                     {
                         Id = n.Id,
                         ImageUrl = n.ImageUrl
-
                     }),
-                    NumberOfActiveTradeRequests = 2,
+                    //TODO: what goes here?
+                    NumberOfActiveTradeRequests = n.TradeItems.Count(),
+                    //TODO: what to put here?
                     Condition = "dfa",
                     Owner = new UserDto 
                     {
@@ -88,9 +90,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         FullName = n.Owner.FullName,
                         Email = n.Owner.Email,
                         ProfileImageUrl = n.Owner.ProfileImageUrl,
-                        //TODO: figure out how to return tokenid?
-                        //TokenId = n.Owner.
-
+                        TokenId = tokenId
                     }
                 }).FirstOrDefault();
 
