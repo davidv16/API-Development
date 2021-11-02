@@ -1,3 +1,4 @@
+using JustTradeIt.Software.API.Models.InputModels;
 using JustTradeIt.Software.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,17 +33,17 @@ namespace JustTradeIt.Software.API.Controllers
         public IActionResult GetItemByIdentifier(string identifier)
         {
             //TODO: implement Gets a detailed version of an item by identifier
-            return Ok();
+            return Ok(_itemService.GetItemByIdentifier(identifier));
         }
 
         [HttpPost]
         [Route("")]
-        public IActionResult AddNewItem()
+        public IActionResult AddNewItem([FromBody] ItemInputModel item)
         {
             //TODO: implement Create a new item which will be associated with the
             //authenticated user and other users will see the new item and can request a
             //trade to acquire that item
-            return Ok();
+            return Ok(_itemService.AddNewItem(User.Identity.Name, item));
         }
         [HttpDelete]
         [Route("{identifier}")]
@@ -52,7 +53,8 @@ namespace JustTradeIt.Software.API.Controllers
             //authenticated user. The item should only be soft deleted from the database.
             //All trade requests which include the deleted item should be marked as
             //cancelled
-            return Ok();
+            _itemService.RemoveItem(User.Identity.Name, identifier);
+            return NoContent();
         }
     }
 }

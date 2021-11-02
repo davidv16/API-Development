@@ -71,8 +71,6 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("profile")]
         public IActionResult UpdateProfile([FromBody] ProfileInputModel profile)
         {
-            //TODO: implement - - Updates the profile information associated with
-            // the authenticated user
             _accountService.UpdateProfile(User.Identity.Name, profile);
             return NoContent();
         }
