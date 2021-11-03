@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Amazon.S3;
 
 namespace JustTradeIt.Software.API
 {
@@ -61,6 +62,11 @@ namespace JustTradeIt.Software.API
             services.AddTransient<ITradeService, TradeService>();
             services.AddTransient<IUserService, UserService>();
 
+            //AWS
+            //services.AddAWSService<IAmazonS3>();
+            //services.AddScoped<IAWSS3Service, AWSS3Service>();
+
+            // for retreiving logged in user info from repositories
             services.AddHttpContextAccessor();
 
             services.AddControllers();

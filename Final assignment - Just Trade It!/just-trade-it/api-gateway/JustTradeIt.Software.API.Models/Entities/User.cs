@@ -5,7 +5,6 @@ namespace JustTradeIt.Software.API.Models.Entities
 {
     public class User
     {
-        [Key]
         public int Id { get; set; }
         public string PublicIdentifier { get; set; }
         public string FullName { get; set; }

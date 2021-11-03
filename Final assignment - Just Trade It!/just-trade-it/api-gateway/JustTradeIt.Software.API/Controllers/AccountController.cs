@@ -58,12 +58,14 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("profile")]
         public IActionResult GetProfileInformation()
         {
-            var claims = User.Claims.Select(c => new
+            /*var claims = User.Claims.Select(c => new
             {
                 Type = c.Type,
                 Value = c.Value
-            });
-            return Ok(claims);
+            });*/
+            var name = User.Claims.FirstOrDefault(u => u.Type == "name").Value;
+            var profile = _accountService.GetProfileInformation(name);
+            return Ok(profile);
         }
 
 
