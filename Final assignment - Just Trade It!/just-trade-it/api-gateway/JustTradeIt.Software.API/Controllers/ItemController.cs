@@ -19,7 +19,7 @@ namespace JustTradeIt.Software.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetItems([FromQuery] int pageNumber, [FromQuery] int pageSize, [FromQuery] bool ascendingSortOrder)
+        public IActionResult GetItems([FromQuery] int pageNumber = 25, [FromQuery] int pageSize = 1, [FromQuery] bool ascendingSortOrder = true)
         {
             //TODO: implement Get all available items
             //The result is an envelope containing the results in pages.
@@ -29,7 +29,7 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
         [HttpGet]
-        [Route("{identifier}")]
+        [Route("{identifier}", Name = "GetItemByIdentifier")]
         public IActionResult GetItemByIdentifier(string identifier)
         {
             //TODO: implement Gets a detailed version of an item by identifier
@@ -40,10 +40,10 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("")]
         public IActionResult AddNewItem([FromBody] ItemInputModel item)
         {
-            //TODO: implement Create a new item which will be associated with the
-            //authenticated user and other users will see the new item and can request a
-            //trade to acquire that item
-            return Ok(_itemService.AddNewItem(User.Identity.Name, item));
+            if (!ModelState.IsValid) { return StatusCode(412, item); };
+            var identifier = _itemService.AddNewItem(User.Identity.Name, item);
+
+            return CreatedAtRoute("GetItemByIdentifier", new { identifier }, null);
         }
         [HttpDelete]
         [Route("{identifier}")]

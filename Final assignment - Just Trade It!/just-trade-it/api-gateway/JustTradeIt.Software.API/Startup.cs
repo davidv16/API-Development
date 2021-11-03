@@ -63,8 +63,8 @@ namespace JustTradeIt.Software.API
             services.AddTransient<IUserService, UserService>();
 
             //AWS
-            //services.AddAWSService<IAmazonS3>();
-            //services.AddScoped<IAWSS3Service, AWSS3Service>();
+            services.AddAWSService<IAmazonS3>();
+
 
             // for retreiving logged in user info from repositories
             services.AddHttpContextAccessor();

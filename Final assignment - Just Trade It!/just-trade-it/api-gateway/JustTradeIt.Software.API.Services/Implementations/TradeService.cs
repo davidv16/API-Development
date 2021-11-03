@@ -39,7 +39,7 @@ namespace JustTradeIt.Software.API.Services.Implementations
 
         public void UpdateTradeRequest(string identifier, string email, string status)
         {
-            _tradeRepository.UpdateTradeRequest(email, identifier, Enum.Parse<Models.Enums.TradeStatus>(status));
+            _tradeRepository.UpdateTradeRequest(email, identifier, Enum.Parse<TradeStatus>(status));
         }
     }
 }

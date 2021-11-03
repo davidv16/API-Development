@@ -27,9 +27,9 @@ namespace JustTradeIt.Software.API.Controllers
         public IActionResult CreateUser([FromBody] RegisterInputModel user)
         {
             if (!ModelState.IsValid) { return StatusCode(412, user); };
-            var id = _accountService.CreateUser(user);
+            var newUser = _accountService.CreateUser(user);
 
-            return CreatedAtRoute("", new { id }, null);
+            return CreatedAtRoute("GetUserInformation", new { newUser.Identifier }, null);
         }
 
         [AllowAnonymous]
@@ -58,11 +58,6 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("profile")]
         public IActionResult GetProfileInformation()
         {
-            /*var claims = User.Claims.Select(c => new
-            {
-                Type = c.Type,
-                Value = c.Value
-            });*/
             var name = User.Claims.FirstOrDefault(u => u.Type == "name").Value;
             var profile = _accountService.GetProfileInformation(name);
             return Ok(profile);
@@ -73,6 +68,9 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("profile")]
         public IActionResult UpdateProfile([FromBody] ProfileInputModel profile)
         {
+            //TODO: not able to put. Unsupported media type
+            if (!ModelState.IsValid) { return StatusCode(412, profile); };
+
             _accountService.UpdateProfile(User.Identity.Name, profile);
             return NoContent();
         }

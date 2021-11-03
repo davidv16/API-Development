@@ -24,17 +24,35 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
 
         public string AddNewItem(string email, ItemInputModel item)
         {
-            var nextId = _dbContext.Items.Max(table => table.Id) + 1;
+            var itemConNewId = (_dbContext.ItemConditions.Max(t => (int?)t.Id) ?? 0) + 1;
+
+            _dbContext.ItemConditions.Add(new ItemCondition
+            {
+                Id = itemConNewId,
+                ConditionCode = item.ConditionCode
+            });
+
+            var itemNextId = (_dbContext.Items.Max(t => (int?)t.Id) ?? 0) + 1;
             var newIdentifier = Guid.NewGuid().ToString();
+
             _dbContext.Items.Add(new Item
             {
-                Id = nextId,
+                Id = itemNextId,
                 PublicIdentifier = newIdentifier,
                 Title = item.Title,
                 Description = item.Description,
                 ShortDescription = item.ShortDescription,
+                ItemConditionId = itemConNewId,
                 OwnerId = _dbContext.Users.FirstOrDefault(n => n.Email == email).Id
             });
+
+            _dbContext.ItemImages.AddRange(
+                item.ItemImages
+                    .Select(url => new ItemImage
+                    {
+                        ImageUrl = url,
+                        ItemId = itemNextId
+                    }));
 
             _dbContext.SaveChanges();
 
@@ -57,15 +75,14 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         ProfileImageUrl = n.Owner.ProfileImageUrl
                     }
                 }).ToList();
-                
+
+            //TODO: finish returning sorted items
             var envelope = new Envelope<ItemDto>(pageNumber, pageSize, items);
             return envelope;
         }
 
         public ItemDetailsDto GetItemByIdentifier(string identifier)
         {
-            int.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
-            
             var item = _dbContext.Items
                 .Where(n => n.PublicIdentifier == identifier)
                 .Include(i => i.ItemImages)
@@ -80,17 +97,14 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         Id = n.Id,
                         ImageUrl = n.ImageUrl
                     }),
-                    //TODO: what goes here?
-                    NumberOfActiveTradeRequests = n.TradeItems.Count(),
-                    //TODO: what to put here?
-                    Condition = "dfa",
-                    Owner = new UserDto 
+                    NumberOfActiveTradeRequests = n.TradeItems.Count(), //TODO: count number of active trade requests
+                    Condition = n.ItemCondition.ConditionCode,
+                    Owner = new UserDto
                     {
                         Identifier = n.Owner.PublicIdentifier,
                         FullName = n.Owner.FullName,
                         Email = n.Owner.Email,
                         ProfileImageUrl = n.Owner.ProfileImageUrl,
-                        TokenId = tokenId
                     }
                 }).FirstOrDefault();
 
@@ -100,7 +114,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
         public void RemoveItem(string email, string identifier)
         {
             var owner = _dbContext.Items.FirstOrDefault(n => n.Owner.Email == email);
-            if(owner == null){throw new Exception("This Item doesn't have an owner with that email address");}
+            if (owner == null) { throw new Exception("This Item doesn't have an owner with that email address"); }
 
             var item = _dbContext.Items.Single(n => n.PublicIdentifier == identifier);
             _dbContext.Remove(item);

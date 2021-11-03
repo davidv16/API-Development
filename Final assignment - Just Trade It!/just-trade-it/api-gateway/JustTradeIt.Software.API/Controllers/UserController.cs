@@ -19,10 +19,9 @@ namespace JustTradeIt.Software.API.Controllers
 
         //TODO: implement Get a user profile Information
         [HttpGet]
-        [Route("{identifier}")]
+        [Route("{identifier}", Name = "GetUserInformation")]
         public IActionResult GetUserInformation(string identifier)
         {
-
             return Ok(_userService.GetUserInformation(identifier));
         }
 

@@ -13,11 +13,14 @@ namespace JustTradeIt.Software.API.Services.Implementations
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenRepository _tokenRepository;
+        private readonly IImageService _imageService;
+        static readonly TaskCompletionSource<bool> _tcs = new TaskCompletionSource<bool>();
 
-        public AccountService(IUserRepository userRepository, ITokenRepository tokenRepository)
+        public AccountService(IUserRepository userRepository, ITokenRepository tokenRepository, IImageService imageService)
         {
             _userRepository = userRepository;
             _tokenRepository = tokenRepository;
+            _imageService = imageService;
         }
 
         public UserDto AuthenticateUser(LoginInputModel loginInputModel)
@@ -40,14 +43,19 @@ namespace JustTradeIt.Software.API.Services.Implementations
             _tokenRepository.VoidToken(tokenId);
         }
 
-        //TODO: implement to Task
         public Task UpdateProfile(string email, ProfileInputModel profile)
         {
-            //TODO: implement
-            string profileImageUrl = "/bleh/sdfsdf";
+
+            string profileImageUrl = "";
+
+            if (profile.ProfileImage != null)
+            {
+                profileImageUrl = _imageService.UploadImageToBucket(email, profile.ProfileImage).Result;
+            }
 
             _userRepository.UpdateProfile(email, profileImageUrl, profile);
-            throw new NotImplementedException();
+
+            return _tcs.Task;
         }
     }
 }

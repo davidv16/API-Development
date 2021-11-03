@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using JustTradeIt.Software.API.Models.CustomAttributes;
 
 namespace JustTradeIt.Software.API.Models.InputModels
 {
@@ -11,11 +12,11 @@ namespace JustTradeIt.Software.API.Models.InputModels
         public string ShortDescription { get; set; }
         [Required]
         public string Description { get; set; }
-        
+
         [Required(ErrorMessage = "Must be one of the following: MINT, GOOD, USED, BAD, DAMAGED")]
         [RegularExpression("^(MINT|GOOD|USED|BAD|DAMAGED)$")]
         public string ConditionCode { get; set; }
-        [Url]
+        [UrlList]
         public IEnumerable<string> ItemImages { get; set; }
     }
 }
