@@ -21,10 +21,6 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("")]
         public IActionResult GetItems([FromQuery] int pageNumber = 25, [FromQuery] int pageSize = 1, [FromQuery] bool ascendingSortOrder = true)
         {
-            //TODO: implement Get all available items
-            //The result is an envelope containing the results in pages.
-
-
             return Ok(_itemService.GetItems(pageSize, pageNumber, ascendingSortOrder));
         }
 
@@ -32,8 +28,10 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("{identifier}", Name = "GetItemByIdentifier")]
         public IActionResult GetItemByIdentifier(string identifier)
         {
-            //TODO: implement Gets a detailed version of an item by identifier
-            return Ok(_itemService.GetItemByIdentifier(identifier));
+            var item = _itemService.GetItemByIdentifier(identifier);
+            if (item == null) { return NotFound(); }
+            
+            return Ok(item);
         }
 
         [HttpPost]

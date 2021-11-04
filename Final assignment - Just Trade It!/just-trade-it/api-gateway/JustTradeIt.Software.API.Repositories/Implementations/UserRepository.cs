@@ -122,7 +122,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
             var newProfile = _dbContext.Users.FirstOrDefault(n => n.Email == email);
 
             newProfile.FullName = profile.FullName;
-            newProfile.ProfileImageUrl = profile.ProfileImage.ToString();
+            newProfile.ProfileImageUrl = profileImageUrl;
 
             _dbContext.SaveChanges();
         }

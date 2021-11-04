@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using JustTradeIt.Software.API.Models.Entities;
 using Microsoft.AspNetCore.Http;
+using JustTradeIt.Software.API.Models.Enums;
 
 namespace JustTradeIt.Software.API.Repositories.Implementations
 {
@@ -75,18 +76,35 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         ProfileImageUrl = n.Owner.ProfileImageUrl
                     }
                 }).ToList();
-
-            //TODO: finish returning sorted items
-            var envelope = new Envelope<ItemDto>(pageNumber, pageSize, items);
-            return envelope;
+            
+            if(ascendingSortOrder)
+            {
+                return new Envelope<ItemDto>(
+                pageNumber, 
+                pageSize, 
+                items.OrderBy(i => i.Title));
+            }
+            else
+            {
+                return new Envelope<ItemDto>(
+                pageNumber, 
+                pageSize, 
+                items.OrderByDescending(i => i.Title));;
+            }
         }
 
         public ItemDetailsDto GetItemByIdentifier(string identifier)
         {
+            var activeTradeRequests = _dbContext.TradeItems
+                .Include(t => t.Trade)
+                .Include(i => i.Item)
+                .Where(n => 
+                    (n.Trade.TradeStatus == TradeStatus.Pending.ToString() &&
+                    n.Item.PublicIdentifier == identifier));
+
             var item = _dbContext.Items
                 .Where(n => n.PublicIdentifier == identifier)
                 .Include(i => i.ItemImages)
-                .Include(u => u.TradeItems)
                 .Select(n => new ItemDetailsDto
                 {
                     Identifier = n.PublicIdentifier,
@@ -97,7 +115,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         Id = n.Id,
                         ImageUrl = n.ImageUrl
                     }),
-                    NumberOfActiveTradeRequests = n.TradeItems.Count(), //TODO: count number of active trade requests
+                    NumberOfActiveTradeRequests = activeTradeRequests.Count(),
                     Condition = n.ItemCondition.ConditionCode,
                     Owner = new UserDto
                     {
@@ -108,17 +126,21 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                     }
                 }).FirstOrDefault();
 
+            
             return item;
         }
 
         public void RemoveItem(string email, string identifier)
         {
+            //TODO: implement soft delete
+            /*
             var owner = _dbContext.Items.FirstOrDefault(n => n.Owner.Email == email);
             if (owner == null) { throw new Exception("This Item doesn't have an owner with that email address"); }
 
             var item = _dbContext.Items.Single(n => n.PublicIdentifier == identifier);
             _dbContext.Remove(item);
             _dbContext.SaveChanges();
+            */
         }
     }
 }

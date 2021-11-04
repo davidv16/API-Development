@@ -64,11 +64,11 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
 
+        //TODO: only logged in user can update themselves
         [HttpPut]
         [Route("profile")]
-        public IActionResult UpdateProfile([FromBody] ProfileInputModel profile)
+        public IActionResult UpdateProfile([FromForm] ProfileInputModel profile)
         {
-            //TODO: not able to put. Unsupported media type
             if (!ModelState.IsValid) { return StatusCode(412, profile); };
 
             _accountService.UpdateProfile(User.Identity.Name, profile);
