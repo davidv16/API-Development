@@ -1,3 +1,4 @@
+using JustTradeIt.Software.API.Models.InputModels;
 using JustTradeIt.Software.API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,46 +19,50 @@ namespace JustTradeIt.Software.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetTrades()
+        public IActionResult GetAllUserTrades([FromQuery] bool onlyIncludeActive)
         {
-            //TODO: implement Gets all trades associated with the authenticated user
-            _tradeService.GetTrades(User.Identity.Name);
-            return Ok();
+            //Gets all trades associated with the authenticated user
+            return Ok(_tradeService.GetTradeRequests(User.Identity.Name, onlyIncludeActive));
         }
 
         [HttpPost]
         [Route("")]
-        public IActionResult GetTradeRequests()
+        public IActionResult CreateTradeRequest(TradeInputModel tradeRequest)
         {
-            //TODO: implement Requests a trade to a particular user. Trade proposal
+            //Requests a trade to a particular user. Trade proposal
             //always includes at least one item from each participant. Therefore if you want
             //to acquire a certain item, you must offer some of your items which you
             //believe are equally valuable as the desired item
-            bool onlyIncludeActive = true;
-            _tradeService.GetTradeRequests(User.Identity.Name, onlyIncludeActive);
-            return Ok();
+            if (!ModelState.IsValid) { return StatusCode(412, tradeRequest); }
+
+            var identifier = _tradeService.CreateTradeRequest(User.Identity.Name, tradeRequest);
+            return CreatedAtRoute("GetTradeByIdentifier", new { identifier }, null);
         }
 
         [HttpGet]
-        [Route("{identifier}")]
+        [Route("{identifier}", Name = "GetTradeByIdentifier")]
         public IActionResult GetTradeByIdentifier(string identifier)
         {
-            //TODO: implement Get a detailed version of a trade request
-            _tradeService.GetTradeByIdentifer(User.Identity.Name);
-            return Ok();
+            //Get a detailed version of a trade request
+            var trade = _tradeService.GetTradeByIdentifer(identifier);
+
+            if (trade == null) { return NotFound(); }
+
+            return Ok(trade);
         }
 
         [HttpPut]
         [Route("{identifier}")]
-        public IActionResult UpdateTradeRequest(string identifier)
+        public IActionResult UpdateTradeRequest(string identifier, [FromBody] string tradeStatus)
         {
-            //TODO: implement Updates the status of a trade request. Only a
+            //Updates the status of a trade request. Only a
             //participant of the trade offering can update the status of the trade request.
             //Although if the trade request is in a finalized state it cannot be altered. The
             //only non finalized state is the pending state.
-            string status = "Accepted";
-            _tradeService.UpdateTradeRequest(identifier, User.Identity.Name, status);
-            return Ok();
+            if (!ModelState.IsValid) { return StatusCode(412, identifier); }
+
+            _tradeService.UpdateTradeRequest(identifier, User.Identity.Name, tradeStatus);
+            return NoContent();
         }
     }
 }

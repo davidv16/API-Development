@@ -102,6 +102,8 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
             var user = _dbContext.Users.FirstOrDefault(u =>
                 u.PublicIdentifier == userIdentifier);
 
+            if (user == null) { return null; }
+
             int.TryParse(_httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "tokenId").Value, out var tokenId);
 
             var userInfo = new UserDto

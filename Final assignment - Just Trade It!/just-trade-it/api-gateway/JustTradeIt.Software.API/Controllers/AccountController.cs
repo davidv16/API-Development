@@ -64,7 +64,6 @@ namespace JustTradeIt.Software.API.Controllers
         }
 
 
-        //TODO: only logged in user can update themselves
         [HttpPut]
         [Route("profile")]
         public IActionResult UpdateProfile([FromForm] ProfileInputModel profile)

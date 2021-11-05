@@ -76,20 +76,20 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                         ProfileImageUrl = n.Owner.ProfileImageUrl
                     }
                 }).ToList();
-            
-            if(ascendingSortOrder)
+
+            if (ascendingSortOrder)
             {
                 return new Envelope<ItemDto>(
-                pageNumber, 
-                pageSize, 
+                pageNumber,
+                pageSize,
                 items.OrderBy(i => i.Title));
             }
             else
             {
                 return new Envelope<ItemDto>(
-                pageNumber, 
-                pageSize, 
-                items.OrderByDescending(i => i.Title));;
+                pageNumber,
+                pageSize,
+                items.OrderByDescending(i => i.Title)); ;
             }
         }
 
@@ -98,7 +98,7 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
             var activeTradeRequests = _dbContext.TradeItems
                 .Include(t => t.Trade)
                 .Include(i => i.Item)
-                .Where(n => 
+                .Where(n =>
                     (n.Trade.TradeStatus == TradeStatus.Pending.ToString() &&
                     n.Item.PublicIdentifier == identifier));
 
@@ -126,21 +126,37 @@ namespace JustTradeIt.Software.API.Repositories.Implementations
                     }
                 }).FirstOrDefault();
 
-            
+            if (item == null) { return null; }
+
             return item;
         }
 
         public void RemoveItem(string email, string identifier)
         {
-            //TODO: implement soft delete
-            /*
-            var owner = _dbContext.Items.FirstOrDefault(n => n.Owner.Email == email);
-            if (owner == null) { throw new Exception("This Item doesn't have an owner with that email address"); }
 
-            var item = _dbContext.Items.Single(n => n.PublicIdentifier == identifier);
-            _dbContext.Remove(item);
+            var item = _dbContext.Items
+                .Include(o => o.Owner)
+                .Where(i => (i.PublicIdentifier == identifier
+                    && i.Owner.Email == email
+                    && i.deleted == false))
+                .FirstOrDefault();
+
+            if (item == null) { throw new Exception("Item does not belong to the logged in user."); }
+
+            var activeTradeRequests = _dbContext.TradeItems
+                .Include(t => t.Trade)
+                .Include(i => i.Item)
+                .Where(n =>
+                    (n.Trade.TradeStatus == TradeStatus.Pending.ToString() &&
+                    n.Item.PublicIdentifier == identifier));
+
+            foreach (var t in activeTradeRequests)
+            {
+                t.Trade.TradeStatus = TradeStatus.Cancelled.ToString();
+            }
+
+            item.deleted = true;
             _dbContext.SaveChanges();
-            */
         }
     }
 }
