@@ -30,7 +30,7 @@ namespace JustTradeIt.Software.API.Controllers
         {
             var item = _itemService.GetItemByIdentifier(identifier);
             if (item == null) { return NotFound(); }
-            
+
             return Ok(item);
         }
 
@@ -47,10 +47,10 @@ namespace JustTradeIt.Software.API.Controllers
         [Route("{identifier}")]
         public IActionResult RemoveItem(string identifier)
         {
-            //TODO: Implement - Delete an item from the inventory of the
-            //authenticated user. The item should only be soft deleted from the database.
-            //All trade requests which include the deleted item should be marked as
-            //cancelled
+            var item = _itemService.GetItemByIdentifier(identifier);
+
+            if (item == null) { return NotFound(); }
+
             _itemService.RemoveItem(User.Identity.Name, identifier);
             return NoContent();
         }

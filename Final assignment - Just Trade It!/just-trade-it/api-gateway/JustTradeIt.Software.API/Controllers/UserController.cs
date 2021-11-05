@@ -17,20 +17,24 @@ namespace JustTradeIt.Software.API.Controllers
             _userService = userService;
         }
 
-        //TODO: implement Get a user profile Information
         [HttpGet]
         [Route("{identifier}", Name = "GetUserInformation")]
         public IActionResult GetUserInformation(string identifier)
         {
-            return Ok(_userService.GetUserInformation(identifier));
+            var userInfo = _userService.GetUserInformation(identifier);
+            if (userInfo == null) { return NotFound(); }
+
+            return Ok(userInfo);
         }
 
-        //TODO: Get all successful trades associated with a user
         [HttpGet]
         [Route("{identifier}/trades")]
         public IActionResult GetUserTrades(string identifier)
         {
-            return Ok(_userService.GetUserTrades(identifier));
+            var userTrades = _userService.GetUserTrades(identifier);
+            if (userTrades == null) { return NotFound(); }
+
+            return Ok(userTrades);
         }
 
     }
