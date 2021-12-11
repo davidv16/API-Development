@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0
 
-LABEL maintainer="Einar Sigurðsson (einarsig16@ru.is)"
+LABEL maintainer="Davíð Valdimar Arnalds (davidv16@ru.is)"
 
 ENV ASPNETCORE_URLS=http://+:5000;https://+:5001
 ENV RMQ_HOST=message-broker
