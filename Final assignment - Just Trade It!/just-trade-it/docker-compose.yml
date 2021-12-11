@@ -16,7 +16,7 @@ services:
       - just-trade-it-network
   
   message-broker:
-    image: rabbitmq
+    image: rabbitmq:latest
     hostname: message-broker
     environment:
       RABBITMQ_DEFAULT_USER: user
