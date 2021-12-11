@@ -1,14 +1,64 @@
 import pika
-import os
+from os import environ
+from time import sleep
 
-exchange_name = '<name-of-exchange>'
+exchange_name = 'just-trade-it-exchange'
+
+def connect_to_mb():
+    error = False
+    queue_host = environ.get('RMQ_HOST') or 'localhost'
+    while not error:
+        try:
+            credentials=pika.PlainCredentials(
+                environ.get('RMQ_USER') or 'guest',
+                environ.get('RMQ_PASS') or 'guest'
+            )
+            connection = pika.BlockingConnection(
+                pika.ConnectionParameters(
+                    queue_host,
+                    5672,
+                    '/',
+                    credentials        
+                )
+            )
+            channel = connection.channel()
+            return (channel, connection)
+        except:
+            sleep(5)
+            continue
 
 def setup():
-    queue_host = os.environ.get('QUEUE_HOST') or 'localhost'
-    connection = pika.BlockingConnection(pika.ConnectionParameters(queue_host, credentials=pika.PlainCredentials('<username>', '<password>')))
-    channel = connection.channel()
+    '''
+    error = False
+    queue_host = environ.get('RMQ_HOST') or 'localhost'
+    credentials=pika.PlainCredentials(
+        environ.get('RMQ_USER') or 'guest',
+        environ.get('RMQ_PASS') or 'guest'
+    )
+
+    while not error:
+        try:
+            connection = pika.BlockingConnection(
+                pika.ConnectionParameters(
+                    queue_host,
+                    5672,
+                    '/',
+                    credentials        
+                )
+            )
+            channel = connection.channel()
+        except:
+            sleep(5)
+            continue
+    '''
+    channel, connection = connect_to_mb()
+    
     # Declare the exchange, if it doesn't exist
-    channel.exchange_declare(exchange=exchange_name, exchange_type='direct', durable=True)
+    channel.exchange_declare(
+        exchange=exchange_name,
+        exchange_type='direct',
+        durable=True
+    )
 
     return (
         channel,
